@@ -10,3 +10,4 @@ target/
 
 #private files
 *.properties
+*.yml

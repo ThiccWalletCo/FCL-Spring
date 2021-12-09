@@ -1,10 +1,10 @@
 package com.thiccWallet.FCL.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.thiccWallet.FCL.league.League;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -26,6 +26,9 @@ public class User {
 
     @Column(nullable = true, unique = false, columnDefinition = "VARCHAR CHECK (email <> '')")
     private LocalDateTime dateCreated;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "joinedUsers")
+    private List<League> joinedLeagues;
 
     public User(String id, String email, String username, String password, LocalDateTime dateCreated) {
         this.id = id;
