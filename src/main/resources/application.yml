@@ -8,9 +8,9 @@ spring:
     name: fantasy-coin-league
   datasource:
     driver-class-name: org.postgresql.Driver
-    url:
-    username:
-    password:
+    url: jdbc:postgresql://java-react-enterprise-211101.czmmy9kaow9d.us-west-1.rds.amazonaws.com:5432/postgres?currentSchema=fcl
+    username: postgres
+    password: password1
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     show-sql: true
