@@ -204,7 +204,7 @@ insert into wallet_coins (walletcoin_id, wallet_id, coin_id, amount)
 values ('7d78bf55-683c-48eb-805b-13471588d3ea', '1cad163f-847f-4c76-9b36-30a7efea706e', '9337c66c-7b0e-4890-91ff-571050f2ca77', 0.01);
 
 insert into transactions (transaction_id, wallet_id, coin_id, usd_change, coin_change, date_time)
-values ('873f573c-8af2-4ac6-baf8-ca2c2f41f601', '1cad163f-847f-4c76-9b36-30a7efea706e', '9337c66c-7b0e-4890-91ff-571050f2ca77', 0.01, current_timestamp);
+values ('873f573c-8af2-4ac6-baf8-ca2c2f41f601', '1cad163f-847f-4c76-9b36-30a7efea706e', '9337c66c-7b0e-4890-91ff-571050f2ca77', -600, 0.01, current_timestamp);
 
 update wallets 
 set wallet_bal = 600, cash_bal = 400
@@ -212,10 +212,10 @@ where wallet_id = '1cad163f-847f-4c76-9b36-30a7efea706e';
 
 
 insert into wallet_coins (walletcoin_id, wallet_id, coin_id, amount)
-values ('7d78bf55-683c-48eb-805b-13471588d3ea', '1cad163f-847f-4c76-9b36-30a7efea706e', 'c91b7d0c-fc8f-41a9-8601-2351f2a87448', 10000);
+values ('bfc0fb88-3342-4b7a-8249-7dba0609b35d', '1cad163f-847f-4c76-9b36-30a7efea706e', 'c91b7d0c-fc8f-41a9-8601-2351f2a87448', 10000);
 
 insert into transactions (transaction_id, wallet_id, coin_id, usd_change, coin_change, date_time)
-values ('ec11b2dc-9c66-4f34-8d13-919b2e9c0200', '1cad163f-847f-4c76-9b36-30a7efea706e', 'c91b7d0c-fc8f-41a9-8601-2351f2a87448', 10000, current_timestamp);
+values ('ec11b2dc-9c66-4f34-8d13-919b2e9c0200', '1cad163f-847f-4c76-9b36-30a7efea706e', 'c91b7d0c-fc8f-41a9-8601-2351f2a87448', -0.50, 10000, current_timestamp);
 
 update wallets 
 set wallet_bal = 600.50, cash_bal = 399.50
@@ -226,7 +226,7 @@ insert into wallet_coins (walletcoin_id, wallet_id, coin_id, amount)
 values ('2ea2d44d-b073-4081-bd89-597d51e6c868', '1cad163f-847f-4c76-9b36-30a7efea706e', 'f4ce9098-629e-4170-b269-f5aaad12b5f2', 300);
 
 insert into transactions (transaction_id, wallet_id, coin_id, usd_change, coin_change, date_time)
-values ('0af5bb01-dc18-49bb-b3f9-438aafec853c', '1cad163f-847f-4c76-9b36-30a7efea706e', 'f4ce9098-629e-4170-b269-f5aaad12b5f2', 300, current_timestamp);
+values ('0af5bb01-dc18-49bb-b3f9-438aafec853c', '1cad163f-847f-4c76-9b36-30a7efea706e', 'f4ce9098-629e-4170-b269-f5aaad12b5f2', -300, 300, current_timestamp);
 
 update wallets 
 set wallet_bal = 900.50, cash_bal = 99.50
