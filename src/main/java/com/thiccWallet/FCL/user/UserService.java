@@ -1,5 +1,6 @@
 package com.thiccWallet.FCL.user;
 
+import com.thiccWallet.FCL.user.dtos.requests.UserCreationRequest;
 import com.thiccWallet.FCL.user.dtos.responses.UserResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,5 +30,11 @@ public class UserService {
         }
 
         return users;
+    }
+
+    private boolean isUserCreationRequestvalid(UserCreationRequest newUser) {
+        if (newUser.getUsername() == null || newUser.getUsername().trim().equals("")) return false;
+        if (newUser.getEmail() == null || newUser.getEmail().trim().equals(""));
+        return newUser.getPassword() != null && !newUser.getPassword().trim().equals("");
     }
 }
