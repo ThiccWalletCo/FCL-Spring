@@ -39,7 +39,7 @@ public class UserService {
     @Transactional
     public UserCreatedResponse createNewUser(UserCreationRequest userCreationRequest) {
 
-        if (isUserCreationRequestvalid(userCreationRequest)) {
+        if (!isUserCreationRequestvalid(userCreationRequest)) {
             throw new InvalidRequestException("Invalid Credentials entered: " + userCreationRequest);
         }
 
@@ -63,7 +63,7 @@ public class UserService {
 
     private boolean isUserCreationRequestvalid(UserCreationRequest newUser) {
         if (newUser.getUsername() == null || newUser.getUsername().trim().equals("")) return false;
-        if (newUser.getEmail() == null || newUser.getEmail().trim().equals(""));
+        if (newUser.getEmail() == null || newUser.getEmail().trim().equals("")) return false;
         return newUser.getPassword() != null && !newUser.getPassword().trim().equals("");
     }
 
