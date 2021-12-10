@@ -1,5 +1,7 @@
 package com.thiccWallet.FCL.user.dtos.responses;
 
+import com.thiccWallet.FCL.user.User;
+
 import java.time.LocalDateTime;
 
 public class UserCreatedResponse {
@@ -18,6 +20,13 @@ public class UserCreatedResponse {
         this.username = username;
         this.email = email;
         this.dateCreated = dateCreated;
+    }
+
+    public UserCreatedResponse(User user) {
+        this.userID = user.getId();
+        this.username = user.getUsername();
+        this.email = user.getEmail();
+        this.dateCreated = user.getDateCreated();
     }
 
     public String getUserID() {

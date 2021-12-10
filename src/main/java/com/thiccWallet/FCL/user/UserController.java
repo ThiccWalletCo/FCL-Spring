@@ -1,11 +1,13 @@
 package com.thiccWallet.FCL.user;
 
+import com.thiccWallet.FCL.user.dtos.requests.UserCreationRequest;
 import com.thiccWallet.FCL.user.dtos.responses.UserCreatedResponse;
 import com.thiccWallet.FCL.user.dtos.responses.UserResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -35,9 +37,8 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public UserCreatedResponse createUser() {
-
-        return null;
+    public UserCreatedResponse createUser(@RequestBody @Valid UserCreationRequest userCreationRequest) {
+        return userService.createNewUser(userCreationRequest);
     }
 
 }
