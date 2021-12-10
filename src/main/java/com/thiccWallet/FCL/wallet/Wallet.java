@@ -31,6 +31,8 @@ public class Wallet {
     @Column(name = "cash_bal")
     private double cashBalance;
 
+    //------------------------------------------------
+
     public Wallet() {
 
     }
@@ -51,6 +53,8 @@ public class Wallet {
         this.walletBalance = walletBalance;
         this.cashBalance = cashBalance;
     }
+
+    //-------------------------------------------------------
 
     public String getWalletID() {
         return walletID;
@@ -99,6 +103,8 @@ public class Wallet {
     public void setCashBalance(double cashBalance) {
         this.cashBalance = cashBalance;
     }
+
+    //--------------------------------------------------------------
 
     @Override
     public boolean equals(Object o) {
