@@ -1,6 +1,7 @@
 package com.thiccWallet.FCL.user;
 
 import com.thiccWallet.FCL.league.League;
+import com.thiccWallet.FCL.user.dtos.requests.UserCreationRequest;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,6 +31,10 @@ public class User {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "joinedUsers")
     private List<League> joinedLeagues;
 
+    public User(){
+
+    }
+
     public User(String id, String email, String username, String password, LocalDateTime dateCreated) {
         this.id = id;
         this.email = email;
@@ -38,7 +43,13 @@ public class User {
         this.dateCreated = dateCreated;
     }
 
-    public User(){}
+    public User(UserCreationRequest newUser) {
+        this.email = newUser.getEmail();
+        this.username = newUser.getUsername();
+        this.password = newUser.getPassword();
+
+        this.dateCreated = LocalDateTime.now();
+    }
 
     public String getId() {
         return id;
