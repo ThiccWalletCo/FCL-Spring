@@ -1,12 +1,17 @@
 package com.thiccWallet.FCL.coin;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name="coins")
 public class Coin {
     @Id
+    @Column(name = "coin_id")
     private String coinId;
     @Column(nullable = false, unique = false, columnDefinition = "VARCHAR CHECK (coinId <> '')")
     private String coinName;
