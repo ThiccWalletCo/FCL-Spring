@@ -30,6 +30,7 @@ public class Coin {
     }
 
 
+
     public String getCoinId() {
         return coinId;
     }
