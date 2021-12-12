@@ -1,9 +1,17 @@
 package com.thiccWallet.FCL.user.dtos.requests;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 public class UserCreationRequest {
 
+    @Email
     private String email;
+
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String password;
 
     public UserCreationRequest() {
