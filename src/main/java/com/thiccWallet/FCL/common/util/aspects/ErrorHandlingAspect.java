@@ -1,10 +1,7 @@
 package com.thiccWallet.FCL.common.util.aspects;
 
 import com.thiccWallet.FCL.common.dtos.ErrorResponse;
-import com.thiccWallet.FCL.common.exception.DuplicateCredentialsException;
-import com.thiccWallet.FCL.common.exception.InvalidRequestException;
-import com.thiccWallet.FCL.common.exception.NoSuchUserException;
-import com.thiccWallet.FCL.common.exception.NotLoggedInException;
+import com.thiccWallet.FCL.common.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,7 +24,7 @@ public class ErrorHandlingAspect {
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler({NotLoggedInException.class})
+    @ExceptionHandler({NotLoggedInException.class, DuplicateLoginAttemptException.class})
     public ErrorResponse handleUnauthorizedRequests(Exception e) {
         return new ErrorResponse(401, e);
     }
