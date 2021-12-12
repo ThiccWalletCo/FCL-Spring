@@ -25,7 +25,7 @@ public class User {
     @Column(nullable = false, unique = false, columnDefinition = "VARCHAR CHECK (password <> '')")
     private String password;
 
-    @Column(nullable = true, unique = false, columnDefinition = "VARCHAR CHECK (email <> '')")
+    @Column(nullable = true, unique = false)
     private LocalDateTime dateCreated;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "joinedUsers")
