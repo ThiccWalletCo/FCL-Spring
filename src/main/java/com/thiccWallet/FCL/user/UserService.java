@@ -71,6 +71,11 @@ public class UserService {
         return userRepo.findUserByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
     }
 
+    @Transactional
+    public void deleteUser(User user) {
+        userRepo.delete(user);
+    }
+
     private boolean isUserCreationRequestvalid(UserCreationRequest newUser) {
         if (newUser.getUsername() == null || newUser.getUsername().trim().equals("")) return false;
         if (newUser.getEmail() == null || newUser.getEmail().trim().equals("")) return false;
