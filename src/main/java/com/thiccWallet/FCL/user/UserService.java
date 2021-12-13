@@ -2,14 +2,17 @@ package com.thiccWallet.FCL.user;
 
 import com.thiccWallet.FCL.common.exception.DuplicateCredentialsException;
 import com.thiccWallet.FCL.common.exception.InvalidRequestException;
+import com.thiccWallet.FCL.login.dtos.request.LoginRequest;
 import com.thiccWallet.FCL.user.dtos.requests.UserCreationRequest;
 import com.thiccWallet.FCL.user.dtos.responses.UserCreatedResponse;
 import com.thiccWallet.FCL.user.dtos.responses.UserResponse;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -39,7 +42,7 @@ public class UserService {
     @Transactional
     public UserCreatedResponse createNewUser(UserCreationRequest userCreationRequest) {
 
-        if (!isUserCreationRequestvalid(userCreationRequest)) {
+        if (!isUserCreationRequestValid(userCreationRequest)) {
             throw new InvalidRequestException("Invalid Credentials entered: " + userCreationRequest);
         }
 
@@ -61,10 +64,28 @@ public class UserService {
         return new UserCreatedResponse(newUser);
     }
 
-    private boolean isUserCreationRequestvalid(UserCreationRequest newUser) {
+    @Transactional
+    public Optional<User> loginUser(LoginRequest loginRequest) {
+        if (!isLoginRequestValid(loginRequest)) {
+            throw new InvalidRequestException("Invalid credentials entered");
+        }
+        return userRepo.findUserByUsernameAndPassword(loginRequest.getUsername(), loginRequest.getPassword());
+    }
+
+    @Transactional
+    public void deleteUser(User user) {
+        userRepo.deleteById(user.getId());
+    }
+
+    private boolean isUserCreationRequestValid(UserCreationRequest newUser) {
         if (newUser.getUsername() == null || newUser.getUsername().trim().equals("")) return false;
         if (newUser.getEmail() == null || newUser.getEmail().trim().equals("")) return false;
         return newUser.getPassword() != null && !newUser.getPassword().trim().equals("");
+    }
+
+    private boolean isLoginRequestValid(LoginRequest loginRequest) {
+        if (loginRequest.getUsername() == null || loginRequest.getUsername().trim().equals("")) return false;
+        return loginRequest.getPassword() != null && !loginRequest.getPassword().trim().equals("");
     }
 
 }
