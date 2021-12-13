@@ -32,7 +32,7 @@ public class ErrorHandlingAspect {
 
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler({HttpMediaTypeNotSupportedException.class})
-    public ErrorResponse handleUnsupporrtedMediaRequests(Exception e) {
+    public ErrorResponse handleUnsupportedMediaRequests(Exception e) {
         return new ErrorResponse(415, e);
     }
 
