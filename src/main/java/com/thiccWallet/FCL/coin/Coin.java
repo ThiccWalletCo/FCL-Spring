@@ -11,41 +11,29 @@ import java.util.Objects;
 @Table(name="coins")
 public class Coin {
     @Id
-    @Column(name = "coin_id")
-    private String coinId;
-    @Column(name = "coin_name", nullable = false, unique = false, columnDefinition = "VARCHAR CHECK (coin_name <> '')")
-    private String coinName;
+    @Column(name = "wallet_id")
+    private String walletId;
+    @Id
     @Column(name = "coin_pair", nullable = false, unique = false, columnDefinition = "VARCHAR CHECK(coin_pair <> '')")
     private String coinPair;
-    @Column(nullable = false, unique = false,columnDefinition = "NUMERIC")
-    private double ticker;//price of given coin in double format
+    @Column(nullable = false, unique = false, columnDefinition = "NUMERIC")
+    private double amount;//price of given coin in double format
 
-    public Coin(String coinId, String coinName, String coinPair, double ticker) {
-        this.coinId = coinId;
-        this.coinName = coinName;
+    public Coin(String walletId, String coinName, String coinPair, double amount) {
+        this.walletId = walletId;
         this.coinPair = coinPair;
-        this.ticker = ticker;
-    }
-    public Coin(){//for jackson
+        this.amount = amount;
     }
 
-
-
-    public String getCoinId() {
-        return coinId;
+    public Coin() {//for jackson
     }
 
-
-    public void setCoinId(String coinId) {
-        this.coinId = coinId;
+    public String getWalletId() {
+        return walletId;
     }
 
-    public String getCoinName() {
-        return coinName;
-    }
-
-    public void setCoinName(String coinName) {
-        this.coinName = coinName;
+    public void setWalletId(String walletId) {
+        this.walletId = walletId;
     }
 
     public String getCoinPair() {
@@ -56,30 +44,21 @@ public class Coin {
         this.coinPair = coinPair;
     }
 
-    public double getTicker() {
-        return ticker;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setTicker(double ticker) {
-        this.ticker = ticker;
-    }
-
-    public List<Coin> getCoins(){
-        return null;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     @Override
     public String toString() {
         return "Coin{" +
-                "coinId='" + coinId + '\'' +
-                ", coinName='" + coinName + '\'' +
+                "walletId='" + walletId + '\'' +
                 ", coinPair='" + coinPair + '\'' +
-                ", ticker=" + ticker +
+                ", amount=" + amount +
                 '}';
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(coinId, coinName, coinPair, ticker);
-    }
 }

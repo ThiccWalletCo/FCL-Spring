@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface CoinRepository extends CrudRepository<Coin, String> {
-    List<Coin> findCoinsByCoinId(String coinId);
+    List<Coin> findCoinsByWalletId(String walletId);
 }
