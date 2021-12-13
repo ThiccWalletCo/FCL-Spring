@@ -13,11 +13,11 @@ public class Coin {
     @Id
     @Column(name = "coin_id")
     private String coinId;
-    @Column(nullable = false, unique = false, columnDefinition = "VARCHAR CHECK (coinId <> '')")
+    @Column(name = "coin_name", nullable = false, unique = false, columnDefinition = "VARCHAR CHECK (coin_name <> '')")
     private String coinName;
-    @Column(nullable = false, unique = false, columnDefinition = "VARCHAR CHECK(coinPair <> ''")
+    @Column(name = "coin_pair", nullable = false, unique = false, columnDefinition = "VARCHAR CHECK(coin_pair <> '')")
     private String coinPair;
-    @Column(nullable = false, unique = false,columnDefinition = "NUMERIC CHECK(ticker <> ''")
+    @Column(nullable = false, unique = false,columnDefinition = "NUMERIC")
     private double ticker;//price of given coin in double format
 
     public Coin(String coinId, String coinName, String coinPair, double ticker) {

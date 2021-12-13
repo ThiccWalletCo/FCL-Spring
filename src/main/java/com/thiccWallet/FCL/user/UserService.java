@@ -6,6 +6,7 @@ import com.thiccWallet.FCL.login.dtos.request.LoginRequest;
 import com.thiccWallet.FCL.user.dtos.requests.UserCreationRequest;
 import com.thiccWallet.FCL.user.dtos.responses.UserCreatedResponse;
 import com.thiccWallet.FCL.user.dtos.responses.UserResponse;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +42,7 @@ public class UserService {
     @Transactional
     public UserCreatedResponse createNewUser(UserCreationRequest userCreationRequest) {
 
-        if (!isUserCreationRequestvalid(userCreationRequest)) {
+        if (!isUserCreationRequestValid(userCreationRequest)) {
             throw new InvalidRequestException("Invalid Credentials entered: " + userCreationRequest);
         }
 
@@ -73,10 +74,10 @@ public class UserService {
 
     @Transactional
     public void deleteUser(User user) {
-        userRepo.delete(user);
+        userRepo.deleteById(user.getId());
     }
 
-    private boolean isUserCreationRequestvalid(UserCreationRequest newUser) {
+    private boolean isUserCreationRequestValid(UserCreationRequest newUser) {
         if (newUser.getUsername() == null || newUser.getUsername().trim().equals("")) return false;
         if (newUser.getEmail() == null || newUser.getEmail().trim().equals("")) return false;
         return newUser.getPassword() != null && !newUser.getPassword().trim().equals("");

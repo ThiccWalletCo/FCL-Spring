@@ -53,6 +53,9 @@ public class UserController {
             throw new NotLoggedInException("No User currently logged in: could not delete");
         }
 
+        User authorizedUser = (User)session.getAttribute("authorizedUser");
+        userService.deleteUser(authorizedUser);
+
         session.invalidate();
 
     }

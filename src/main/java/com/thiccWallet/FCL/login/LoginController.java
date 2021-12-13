@@ -41,6 +41,7 @@ public class LoginController {
             session = req.getSession();
 
             session.setAttribute("authorizedUser", authorizedUser);
+
         } else {
             throw new NoSuchUserException("Could not locate user given provided credentials");
         }
