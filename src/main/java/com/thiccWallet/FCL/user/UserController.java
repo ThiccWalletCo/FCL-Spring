@@ -2,6 +2,7 @@ package com.thiccWallet.FCL.user;
 
 import com.thiccWallet.FCL.common.exception.NotLoggedInException;
 import com.thiccWallet.FCL.user.dtos.requests.UserCreationRequest;
+import com.thiccWallet.FCL.user.dtos.requests.UserEditRequest;
 import com.thiccWallet.FCL.user.dtos.responses.UserCreatedResponse;
 import com.thiccWallet.FCL.user.dtos.responses.UserResponse;
 
@@ -60,5 +61,18 @@ public class UserController {
 
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PatchMapping(consumes = "application/json")
+    public void editUser(@RequestBody UserEditRequest userEditRequest, HttpServletRequest req) {
+        HttpSession session = req.getSession(false);
+
+        if(session == null) {
+            throw new NotLoggedInException("No User currently logged in: could not edit");
+        }
+
+        User authorizedUser = (User)session.getAttribute("authorizedUser");
+
+        userService.editUser(userEditRequest, authorizedUser);
+    }
 
 }

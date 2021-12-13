@@ -4,6 +4,7 @@ import com.thiccWallet.FCL.common.exception.DuplicateCredentialsException;
 import com.thiccWallet.FCL.common.exception.InvalidRequestException;
 import com.thiccWallet.FCL.login.dtos.request.LoginRequest;
 import com.thiccWallet.FCL.user.dtos.requests.UserCreationRequest;
+import com.thiccWallet.FCL.user.dtos.requests.UserEditRequest;
 import com.thiccWallet.FCL.user.dtos.responses.UserCreatedResponse;
 import com.thiccWallet.FCL.user.dtos.responses.UserResponse;
 import org.springframework.data.jpa.repository.Modifying;
@@ -77,15 +78,34 @@ public class UserService {
         userRepo.deleteById(user.getId());
     }
 
+    @Transactional
+    public User editUser(UserEditRequest userEditRequest, User user) {
+        if(isFieldValid(userEditRequest.getUsername())) {
+            user.setUsername(userEditRequest.getUsername());
+        }
+        if(isFieldValid(userEditRequest.getEmail())) {
+            user.setEmail(userEditRequest.getEmail());
+        }
+        if(isFieldValid(userEditRequest.getPassword())) {
+            user.setPassword(userEditRequest.getPassword());
+        }
+
+        return userRepo.save(user);
+    }
+
     private boolean isUserCreationRequestValid(UserCreationRequest newUser) {
-        if (newUser.getUsername() == null || newUser.getUsername().trim().equals("")) return false;
-        if (newUser.getEmail() == null || newUser.getEmail().trim().equals("")) return false;
-        return newUser.getPassword() != null && !newUser.getPassword().trim().equals("");
+        if (!isFieldValid(newUser.getUsername())) return false;
+        if (!isFieldValid(newUser.getEmail())) return false;
+        return isFieldValid(newUser.getPassword());
     }
 
     private boolean isLoginRequestValid(LoginRequest loginRequest) {
-        if (loginRequest.getUsername() == null || loginRequest.getUsername().trim().equals("")) return false;
-        return loginRequest.getPassword() != null && !loginRequest.getPassword().trim().equals("");
+        if (!isFieldValid(loginRequest.getUsername())) return false;
+        return isFieldValid(loginRequest.getPassword());
+    }
+
+    private boolean isFieldValid(String field) {
+        return field != null && !field.trim().equals("");
     }
 
 }
