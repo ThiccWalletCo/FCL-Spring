@@ -14,6 +14,10 @@ public interface UserRepository extends CrudRepository<User, String> {
     Optional<User> findUserByUsername(String username);
     Optional<User> findUserByEmail(String email);
 
+    /**
+     *   League findByWallet_LeagueId(int leagueId)
+     */
+
     @Query("from User u where u.username = :username and u.password = :password")
     Optional<User> findUserByUsernameAndPassword(String username, String password);
 

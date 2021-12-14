@@ -34,7 +34,6 @@ public class User {
     private List<League> joinedLeagues;
 
     public User(){
-
     }
 
     public User(String id, String email, String username, String password, LocalDateTime dateCreated) {

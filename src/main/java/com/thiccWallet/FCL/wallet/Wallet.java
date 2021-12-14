@@ -14,47 +14,23 @@ public class Wallet {
     @Column(name = "wallet_id")
     private String walletID;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User owner;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private User owner;
 
     @ManyToOne
     @JoinColumn(name = "league_id")
-    private League league;
+    private League leagueId;
 
     @Column(name = "initial_bal")
     private double initialBalance;
 
-    @Column(name = "wallet_bal")
-    private double walletBalance;
+//    don't need
+//    @Column(name = "wallet_bal")
+//    private double walletBalance;
 
-    @Column(name = "cash_bal")
-    private double cashBalance;
-
-    //------------------------------------------------
-
-    public Wallet() {
-
-    }
-
-    public Wallet(User owner, League league, double initialBalance, double walletBalance, double cashBalance) {
-        this.owner = owner;
-        this.league = league;
-        this.initialBalance = initialBalance;
-        this.walletBalance = walletBalance;
-        this.cashBalance = cashBalance;
-    }
-
-    public Wallet(String walletID, User owner, League league, double initialBalance, double walletBalance, double cashBalance) {
-        this.walletID = walletID;
-        this.owner = owner;
-        this.league = league;
-        this.initialBalance = initialBalance;
-        this.walletBalance = walletBalance;
-        this.cashBalance = cashBalance;
-    }
-
-    //-------------------------------------------------------
+    @Column(name = "usd_bal")
+    private double usdBalance;
 
     public String getWalletID() {
         return walletID;
@@ -64,20 +40,12 @@ public class Wallet {
         this.walletID = walletID;
     }
 
-    public User getOwner() {
-        return owner;
+    public League getLeagueId() {
+        return leagueId;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public League getLeague() {
-        return league;
-    }
-
-    public void setLeague(League league) {
-        this.league = league;
+    public void setLeagueId(League leagueId) {
+        this.leagueId = leagueId;
     }
 
     public double getInitialBalance() {
@@ -88,46 +56,34 @@ public class Wallet {
         this.initialBalance = initialBalance;
     }
 
-    public double getWalletBalance() {
-        return walletBalance;
+    public double getUsdBalance() {
+        return usdBalance;
     }
 
-    public void setWalletBalance(double walletBalance) {
-        this.walletBalance = walletBalance;
-    }
-
-    public double getCashBalance() {
-        return cashBalance;
-    }
-
-    public void setCashBalance(double cashBalance) {
-        this.cashBalance = cashBalance;
-    }
-
-    //--------------------------------------------------------------
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Wallet wallet = (Wallet) o;
-        return Double.compare(wallet.initialBalance, initialBalance) == 0 && Double.compare(wallet.walletBalance, walletBalance) == 0 && Double.compare(wallet.cashBalance, cashBalance) == 0 && Objects.equals(walletID, wallet.walletID) && Objects.equals(owner, wallet.owner) && Objects.equals(league, wallet.league);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(walletID, owner, league, initialBalance, walletBalance, cashBalance);
+    public void setUsdBalance(double usdBalance) {
+        this.usdBalance = usdBalance;
     }
 
     @Override
     public String toString() {
         return "Wallet{" +
                 "walletID='" + walletID + '\'' +
-                ", owner=" + owner +
-                ", league=" + league +
+                ", leagueId=" + leagueId +
                 ", initialBalance=" + initialBalance +
-                ", walletBalance=" + walletBalance +
-                ", cashBalance=" + cashBalance +
+                ", usdBalance=" + usdBalance +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Wallet wallet = (Wallet) o;
+        return Double.compare(wallet.initialBalance, initialBalance) == 0 && Double.compare(wallet.usdBalance, usdBalance) == 0 && Objects.equals(walletID, wallet.walletID) && Objects.equals(leagueId, wallet.leagueId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(walletID, leagueId, initialBalance, usdBalance);
     }
 }
