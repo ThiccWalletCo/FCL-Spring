@@ -11,9 +11,10 @@ import java.util.Objects;
 @Table(name="coins")
 public class Coin {
     @Id
-    @Column(name = "wallet_id")
+    @Column(name = "coin_id")
+    private String coinId;
+    @Column(name = "wallet_id", nullable = false, unique = false, columnDefinition = "VARCHAR CHECK(coin_pair <> '')")
     private String walletId;
-    @Id
     @Column(name = "coin_pair", nullable = false, unique = false, columnDefinition = "VARCHAR CHECK(coin_pair <> '')")
     private String coinPair;
     @Column(nullable = false, unique = false, columnDefinition = "NUMERIC")
