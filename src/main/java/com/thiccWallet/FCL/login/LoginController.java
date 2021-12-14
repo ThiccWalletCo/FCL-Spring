@@ -47,8 +47,8 @@ public class LoginController {
         }
     }
 
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping(consumes = "application/json")
     public void logoutUser(HttpServletRequest req) {
         HttpSession session = req.getSession(false);
 
