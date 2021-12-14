@@ -32,11 +32,6 @@ public class UserService {
                 .map(UserResponse::new)
                 .collect(Collectors.toList());
 
-        if (users.isEmpty()) {
-            // TODO - Create custom exceptions
-            // throw new ResourceNotFoundException();
-        }
-
         return users;
     }
 
@@ -47,15 +42,7 @@ public class UserService {
             throw new InvalidRequestException("Invalid Credentials entered: " + userCreationRequest);
         }
 
-        boolean usernameTaken = userRepo.findUserByUsername(userCreationRequest.getUsername()).isPresent();
-        boolean emailTaken = userRepo.findUserByEmail(userCreationRequest.getEmail()).isPresent();
-
-        if (usernameTaken || emailTaken) {
-            String msg = "The following values are already in use:";
-            if (usernameTaken) msg += "\n\t- username: " + userCreationRequest.getUsername();
-            if (emailTaken) msg += "\n\t- email: " + userCreationRequest.getEmail();
-            throw new DuplicateCredentialsException(msg);
-        }
+        checkCredentialsNotTaken(userCreationRequest.getUsername(), userCreationRequest.getEmail());
 
         User newUser = new User(userCreationRequest);
         newUser.setId(UUID.randomUUID().toString());
@@ -65,7 +52,7 @@ public class UserService {
         return new UserCreatedResponse(newUser);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Optional<User> loginUser(LoginRequest loginRequest) {
         if (!isLoginRequestValid(loginRequest)) {
             throw new InvalidRequestException("Invalid credentials entered");
@@ -80,6 +67,9 @@ public class UserService {
 
     @Transactional
     public User editUser(UserEditRequest userEditRequest, User user) {
+
+        checkCredentialsNotTaken(userEditRequest.getUsername(), userEditRequest.getEmail());
+
         if(isFieldValid(userEditRequest.getUsername())) {
             user.setUsername(userEditRequest.getUsername());
         }
@@ -91,6 +81,29 @@ public class UserService {
         }
 
         return userRepo.save(user);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isUsernameAvailable(String username) {
+        return !userRepo.findUserByUsername(username).isPresent();
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isEmailAvailable(String email) {
+        return !userRepo.findUserByEmail(email).isPresent();
+    }
+
+    @Transactional(readOnly = true)
+    private void checkCredentialsNotTaken(String username, String email) {
+        boolean usernameTaken = userRepo.findUserByUsername(username).isPresent();
+        boolean emailTaken = userRepo.findUserByEmail(email).isPresent();
+
+        if (usernameTaken || emailTaken) {
+            String msg = "The following values are already in use:";
+            if (usernameTaken) msg += "\n\t- username: " + username;
+            if (emailTaken) msg += "\n\t- email: " + email;
+            throw new DuplicateCredentialsException(msg);
+        }
     }
 
     private boolean isUserCreationRequestValid(UserCreationRequest newUser) {

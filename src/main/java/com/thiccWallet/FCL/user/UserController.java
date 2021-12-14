@@ -7,6 +7,7 @@ import com.thiccWallet.FCL.user.dtos.responses.UserCreatedResponse;
 import com.thiccWallet.FCL.user.dtos.responses.UserResponse;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,6 +74,16 @@ public class UserController {
         User authorizedUser = (User)session.getAttribute("authorizedUser");
 
         userService.editUser(userEditRequest, authorizedUser);
+    }
+
+    @GetMapping("/username")
+    public ResponseEntity<Void> checkUsernameAvailability(@RequestParam String username) {
+        return userService.isUsernameAvailable(username) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.CONFLICT);
+    }
+
+    @GetMapping("/email")
+    public ResponseEntity<Void> checkEmailAvailability(@RequestParam String email) {
+        return userService.isEmailAvailable(email) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
 }
