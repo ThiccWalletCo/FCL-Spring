@@ -1,13 +1,11 @@
 package com.thiccWallet.FCL.data.coin;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/coins")
+@RequestMapping("/coin")
 public class CoinController {
 
     private CoinService coinService;
@@ -21,4 +19,13 @@ public class CoinController {
         return coinService.getPairs();
     }
 
+    @GetMapping(value = "/{walletId}/{currPair}", produces = "application/json")
+    public Coin getCoin(@PathVariable String walletId, @PathVariable String currPair){
+        return coinService.getCoin(walletId, currPair);
+    }
+
+    @GetMapping(value = "/{walletId}", produces = "application/json")
+    public List<Coin> getCoinsByWallet(@PathVariable String walletId) {
+        return coinService.getCoinsByWallet(walletId);
+    }
 }

@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @IdClass(CoinId.class)
+@Table(name = "coins")
 public class Coin {
     @Id
     private String walletId;
@@ -11,7 +12,7 @@ public class Coin {
     @Id
     private String currPair;
 
-   // @Column(nullable = false, unique = false, columnDefinition = "NUMERIC")
+    @Column(nullable = false, unique = false, columnDefinition = "NUMERIC")
     private double amount;//price of given coin in double format
 
     public Coin(String walletId, String currPair, double amount) {
@@ -21,6 +22,12 @@ public class Coin {
     }
 
     public Coin() {}
+
+    public Coin(Coin coin) {
+        this.walletId = coin.getWalletId();
+        this.currPair = coin.getCurrPair();
+        this.amount = coin.getAmount();
+    }
 
     public String getWalletId() {
         return walletId;

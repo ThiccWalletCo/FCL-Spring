@@ -10,5 +10,9 @@ import java.util.List;
 public interface CoinRepository extends CrudRepository<Coin, String> {
 
     @Query("SELECT coin.currPair from Coin coin")
-    List<Coin> findAllCoins();
+    List<Coin> getAllCoins();
+
+    Coin findCoinByWalletIdAndCurrPair(String walletId, String Curr_Pair);
+
+    List<Coin> findCoinsByWalletId(String walletId);
 }

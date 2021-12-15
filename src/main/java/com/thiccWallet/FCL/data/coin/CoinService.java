@@ -1,9 +1,14 @@
 package com.thiccWallet.FCL.data.coin;
 
+import com.thiccWallet.FCL.endpoints.users.User;
+import com.thiccWallet.FCL.endpoints.users.dtos.responses.UserResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CoinService {
@@ -14,7 +19,20 @@ public class CoinService {
 
     @Transactional
     public List<Coin> getPairs(){
-        return coinRepo.findAllCoins();
+        List<Coin> coins = ((Collection<Coin>) coinRepo.findAll())
+                .stream()
+                .map(Coin::new)
+                .collect(Collectors.toList());
+        return coins;
+    }
+
+    @Transactional
+    public Coin getCoin(String walletId, String currPair) {
+        return coinRepo.findCoinByWalletIdAndCurrPair(walletId, currPair);
+    }
+
+    public List<Coin> getCoinsByWallet(String walletId) {
+        return coinRepo.findCoinsByWalletId(walletId);
     }
 
 
