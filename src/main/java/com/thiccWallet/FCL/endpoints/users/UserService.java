@@ -2,7 +2,7 @@ package com.thiccWallet.FCL.endpoints.users;
 
 import com.thiccWallet.FCL.common.exception.DuplicateCredentialsException;
 import com.thiccWallet.FCL.common.exception.InvalidRequestException;
-import com.thiccWallet.FCL.login.dtos.request.LoginRequest;
+import com.thiccWallet.FCL.session.login.dtos.request.LoginRequest;
 import com.thiccWallet.FCL.endpoints.users.dtos.requests.UserCreationRequest;
 import com.thiccWallet.FCL.endpoints.users.dtos.requests.UserEditRequest;
 import com.thiccWallet.FCL.endpoints.users.dtos.responses.UserCreatedResponse;

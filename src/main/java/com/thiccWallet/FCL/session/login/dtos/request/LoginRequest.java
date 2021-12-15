@@ -1,4 +1,4 @@
-package com.thiccWallet.FCL.login.dtos.request;
+package com.thiccWallet.FCL.session.login.dtos.request;
 
 import javax.validation.constraints.NotBlank;
 
