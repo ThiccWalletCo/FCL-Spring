@@ -1,9 +1,7 @@
-package com.thiccWallet.FCL.user;
+package com.thiccWallet.FCL.endpoints.users;
 
-import com.thiccWallet.FCL.league.League;
-import com.thiccWallet.FCL.user.dtos.requests.UserCreationRequest;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.thiccWallet.FCL.endpoints.leagues.League;
+import com.thiccWallet.FCL.endpoints.users.dtos.requests.UserCreationRequest;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

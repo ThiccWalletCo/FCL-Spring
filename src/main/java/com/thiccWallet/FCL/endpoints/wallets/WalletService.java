@@ -1,4 +1,4 @@
-package com.thiccWallet.FCL.wallet;
+package com.thiccWallet.FCL.endpoints.wallets;
 
 import com.thiccWallet.FCL.coin.Coin;
 

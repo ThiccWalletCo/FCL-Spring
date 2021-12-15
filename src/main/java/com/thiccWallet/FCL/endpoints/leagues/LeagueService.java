@@ -1,6 +1,6 @@
-package com.thiccWallet.FCL.league;
+package com.thiccWallet.FCL.endpoints.leagues;
 
-import com.thiccWallet.FCL.user.User;
+import com.thiccWallet.FCL.endpoints.users.User;
 
 import java.util.List;
 

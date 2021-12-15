@@ -1,13 +1,12 @@
-package com.thiccWallet.FCL.user;
+package com.thiccWallet.FCL.endpoints.users;
 
 import com.thiccWallet.FCL.common.exception.DuplicateCredentialsException;
 import com.thiccWallet.FCL.common.exception.InvalidRequestException;
 import com.thiccWallet.FCL.login.dtos.request.LoginRequest;
-import com.thiccWallet.FCL.user.dtos.requests.UserCreationRequest;
-import com.thiccWallet.FCL.user.dtos.requests.UserEditRequest;
-import com.thiccWallet.FCL.user.dtos.responses.UserCreatedResponse;
-import com.thiccWallet.FCL.user.dtos.responses.UserResponse;
-import org.springframework.data.jpa.repository.Modifying;
+import com.thiccWallet.FCL.endpoints.users.dtos.requests.UserCreationRequest;
+import com.thiccWallet.FCL.endpoints.users.dtos.requests.UserEditRequest;
+import com.thiccWallet.FCL.endpoints.users.dtos.responses.UserCreatedResponse;
+import com.thiccWallet.FCL.endpoints.users.dtos.responses.UserResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

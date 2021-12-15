@@ -1,4 +1,4 @@
-package com.thiccWallet.FCL.user.dtos.requests;
+package com.thiccWallet.FCL.endpoints.users.dtos.requests;
 
 public class UserEditRequest {
 

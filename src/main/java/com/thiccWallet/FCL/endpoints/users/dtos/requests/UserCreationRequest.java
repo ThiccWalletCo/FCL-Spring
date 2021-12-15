@@ -1,4 +1,4 @@
-package com.thiccWallet.FCL.user.dtos.requests;
+package com.thiccWallet.FCL.endpoints.users.dtos.requests;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
