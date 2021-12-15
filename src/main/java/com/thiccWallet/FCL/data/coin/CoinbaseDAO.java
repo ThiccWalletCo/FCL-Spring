@@ -41,24 +41,31 @@ public class CoinbaseDAO {
     }
 
     //returns a list of all supported coins
-//    public List<Coin> getAllCoins() {
-//        try {
-//            List<Coin> pairs = new ArrayList<>();
-//            String json = getTradingPairs_E();
-//            TypeFactory typeFactory = mapper.getTypeFactory();
-//            List<Coin> coins = mapper.
-//                    readValue(json, typeFactory.
-//                            constructCollectionType(List.class, Coin.class));
-//            coins = coins.stream().filter(c -> c.getCurrencyPair().endsWith("USD")).collect(Collectors.toList());
-//
-//            return coins;
-//        } catch (JsonParseException  | JsonMappingException e) {
-//            e.printStackTrace();
-//            throw new JsonParsingException("CoinbaseDAO#getAllCoins failed to properly parse JSON");
-//        } catch (IOException e) {
-//            throw new JsonParsingException("CoinbaseDAO#getAllCoins ObjectMapper failed to read value");
-//        }
-//    }
+    public List<String> getAllCoins() {
+        try {
+            //List<Coin> pairs = new ArrayList<>();
+            String json = getTradingPairs_E();
+            TypeFactory typeFactory = mapper.getTypeFactory();
+
+            //pulls out only currency pairs
+            List<Coin> coins = mapper.
+                    readValue(json, typeFactory.
+                            constructCollectionType(List.class, Coin.class));
+
+            coins = coins.stream().filter(c -> c.getCurrPair().endsWith("USD")).collect(Collectors.toList());
+            //this is dirty
+            List<String> currPairs = new ArrayList<>();
+            for(Coin c : coins){
+                currPairs.add(c.getCurrPair());
+            }
+            return currPairs;
+        } catch (JsonParseException  | JsonMappingException e) {
+            e.printStackTrace();
+            throw new JsonParsingException("CoinbaseDAO#getAllCoins failed to properly parse JSON");
+        } catch (IOException e) {
+            throw new JsonParsingException("CoinbaseDAO#getAllCoins ObjectMapper failed to read value");
+        }
+    }
 
     /*
     Note: Coinbase has two separate apis that this application uses. They seem to come from the same database and even have
@@ -147,7 +154,7 @@ public class CoinbaseDAO {
             e.printStackTrace();
             throw new InvalidRequestException("CoinBaseDAO#getData was likely given a malformedURL");
         }catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw new JsonParsingException("CoinBaseDAO#getData failed to read JSON");
         }
     }

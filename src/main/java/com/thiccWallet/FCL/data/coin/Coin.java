@@ -1,8 +1,12 @@
 package com.thiccWallet.FCL.data.coin;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 @IdClass(CoinId.class)
 @Table(name = "coins")
 public class Coin {
@@ -10,6 +14,7 @@ public class Coin {
     private String walletId;
 
     @Id
+    @JsonProperty("id")
     private String currPair;
 
     @Column(nullable = false, unique = false, columnDefinition = "NUMERIC")
