@@ -1,6 +1,6 @@
 package com.thiccWallet.api._reviewMe.wallet_coins;
 
-import com.thiccWallet.api._reviewMe.coin.Coin;
+import com.thiccWallet.api.models.coin.Coin;
 import com.thiccWallet.api.models.wallet.Wallet;
 
 import javax.persistence.*;

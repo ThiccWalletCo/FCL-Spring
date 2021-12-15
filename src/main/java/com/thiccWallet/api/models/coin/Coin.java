@@ -1,4 +1,4 @@
-package com.thiccWallet.api._reviewMe.coin;
+package com.thiccWallet.api.models.coin;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

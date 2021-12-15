@@ -1,4 +1,4 @@
-package com.thiccWallet.api._reviewMe.coin;
+package com.thiccWallet.api.models.coin;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
