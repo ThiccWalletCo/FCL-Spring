@@ -1,4 +1,4 @@
-package com.thiccWallet.FCL.user;
+package com.thiccWallet.FCL.endpoints.users;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

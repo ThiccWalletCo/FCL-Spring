@@ -1,7 +1,7 @@
-package com.thiccWallet.FCL.wallet;
+package com.thiccWallet.FCL.endpoints.wallets;
 
-import com.thiccWallet.FCL.league.League;
-import com.thiccWallet.FCL.user.User;
+import com.thiccWallet.FCL.endpoints.leagues.League;
+import com.thiccWallet.FCL.endpoints.users.User;
 
 import javax.persistence.*;
 import java.util.Objects;
