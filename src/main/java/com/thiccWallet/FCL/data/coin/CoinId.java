@@ -1,6 +1,5 @@
-package com.thiccWallet.FCL.coin;
+package com.thiccWallet.FCL.data.coin;
 
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 

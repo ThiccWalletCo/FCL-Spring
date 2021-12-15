@@ -1,8 +1,6 @@
-package com.thiccWallet.FCL.league;
+package com.thiccWallet.FCL.endpoints.leagues;
 
-import com.thiccWallet.FCL.user.User;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.thiccWallet.FCL.endpoints.users.User;
 
 import javax.persistence.*;
 import java.util.List;

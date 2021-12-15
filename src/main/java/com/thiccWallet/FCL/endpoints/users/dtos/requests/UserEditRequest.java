@@ -1,21 +1,19 @@
-package com.thiccWallet.FCL.login.dtos.request;
+package com.thiccWallet.FCL.endpoints.users.dtos.requests;
 
-import javax.validation.constraints.NotBlank;
+public class UserEditRequest {
 
-public class LoginRequest {
-
-    @NotBlank
     private String username;
-    @NotBlank
     private String password;
+    private String email;
 
-    public LoginRequest() {
+    public UserEditRequest() {
 
     }
 
-    public LoginRequest(String username, String password) {
+    public UserEditRequest(String username, String password, String email) {
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -34,11 +32,20 @@ public class LoginRequest {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
-        return "LoginRequest{" +
+        return "UserEditRequest{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

@@ -1,10 +1,10 @@
-package com.thiccWallet.FCL.user;
+package com.thiccWallet.FCL.endpoints.users;
 
 import com.thiccWallet.FCL.common.exception.NotLoggedInException;
-import com.thiccWallet.FCL.user.dtos.requests.UserCreationRequest;
-import com.thiccWallet.FCL.user.dtos.requests.UserEditRequest;
-import com.thiccWallet.FCL.user.dtos.responses.UserCreatedResponse;
-import com.thiccWallet.FCL.user.dtos.responses.UserResponse;
+import com.thiccWallet.FCL.endpoints.users.dtos.requests.UserCreationRequest;
+import com.thiccWallet.FCL.endpoints.users.dtos.requests.UserEditRequest;
+import com.thiccWallet.FCL.endpoints.users.dtos.responses.UserCreatedResponse;
+import com.thiccWallet.FCL.endpoints.users.dtos.responses.UserResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

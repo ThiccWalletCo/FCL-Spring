@@ -1,6 +1,6 @@
-package com.thiccWallet.FCL.user.dtos.responses;
+package com.thiccWallet.FCL.endpoints.users.dtos.responses;
 
-import com.thiccWallet.FCL.user.User;
+import com.thiccWallet.FCL.endpoints.users.User;
 
 import java.time.LocalDateTime;
 

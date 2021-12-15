@@ -1,6 +1,5 @@
-package com.thiccWallet.FCL.coin;
+package com.thiccWallet.FCL.data.coin;
 
-import com.thiccWallet.FCL.user.dtos.responses.UserResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

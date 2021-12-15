@@ -1,6 +1,6 @@
-package com.thiccWallet.FCL.wallet;
+package com.thiccWallet.FCL.endpoints.wallets;
 
-import com.thiccWallet.FCL.coin.Coin;
+import com.thiccWallet.FCL.data.coin.Coin;
 
 import java.util.List;
 

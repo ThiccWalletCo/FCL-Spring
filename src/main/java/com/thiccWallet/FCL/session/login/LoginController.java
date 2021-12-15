@@ -1,11 +1,11 @@
-package com.thiccWallet.FCL.login;
+package com.thiccWallet.FCL.session.login;
 
 import com.thiccWallet.FCL.common.exception.DuplicateLoginAttemptException;
 import com.thiccWallet.FCL.common.exception.NoSuchUserException;
 import com.thiccWallet.FCL.common.exception.NotLoggedInException;
-import com.thiccWallet.FCL.login.dtos.request.LoginRequest;
-import com.thiccWallet.FCL.user.User;
-import com.thiccWallet.FCL.user.UserService;
+import com.thiccWallet.FCL.session.login.dtos.request.LoginRequest;
+import com.thiccWallet.FCL.endpoints.users.User;
+import com.thiccWallet.FCL.endpoints.users.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

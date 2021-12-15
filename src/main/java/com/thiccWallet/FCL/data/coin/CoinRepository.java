@@ -1,4 +1,4 @@
-package com.thiccWallet.FCL.coin;
+package com.thiccWallet.FCL.data.coin;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
