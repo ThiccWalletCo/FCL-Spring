@@ -1,85 +1,58 @@
 package com.thiccWallet.FCL.coin;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.List;
-import java.util.Objects;
+import javax.persistence.*;
 
 @Entity
-@Table(name="coins")
+@IdClass(CoinId.class)
 public class Coin {
     @Id
-    @Column(name = "coin_id")
-    private String coinId;
-    @Column(name = "coin_name", nullable = false, unique = false, columnDefinition = "VARCHAR CHECK (coin_name <> '')")
-    private String coinName;
-    @Column(name = "coin_pair", nullable = false, unique = false, columnDefinition = "VARCHAR CHECK(coin_pair <> '')")
-    private String coinPair;
-    @Column(nullable = false, unique = false,columnDefinition = "NUMERIC")
-    private double ticker;//price of given coin in double format
+    private String walletId;
 
-    public Coin(String coinId, String coinName, String coinPair, double ticker) {
-        this.coinId = coinId;
-        this.coinName = coinName;
-        this.coinPair = coinPair;
-        this.ticker = ticker;
-    }
-    public Coin(){//for jackson
+    @Id
+    private String currPair;
+
+   // @Column(nullable = false, unique = false, columnDefinition = "NUMERIC")
+    private double amount;//price of given coin in double format
+
+    public Coin(String walletId, String currPair, double amount) {
+        this.walletId = walletId;
+        this.currPair = currPair;
+        this.amount = amount;
     }
 
+    public Coin() {}
 
-
-    public String getCoinId() {
-        return coinId;
+    public String getWalletId() {
+        return walletId;
     }
 
-
-    public void setCoinId(String coinId) {
-        this.coinId = coinId;
+    public void setWalletId(String walletId) {
+        this.walletId = walletId;
     }
 
-    public String getCoinName() {
-        return coinName;
+    public String getCurrPair() {
+        return currPair;
     }
 
-    public void setCoinName(String coinName) {
-        this.coinName = coinName;
+    public void setCurrPair(String currPair) {
+        this.currPair = currPair;
     }
 
-    public String getCoinPair() {
-        return coinPair;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setCoinPair(String coinPair) {
-        this.coinPair = coinPair;
-    }
-
-    public double getTicker() {
-        return ticker;
-    }
-
-    public void setTicker(double ticker) {
-        this.ticker = ticker;
-    }
-
-    public List<Coin> getCoins(){
-        return null;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     @Override
     public String toString() {
         return "Coin{" +
-                "coinId='" + coinId + '\'' +
-                ", coinName='" + coinName + '\'' +
-                ", coinPair='" + coinPair + '\'' +
-                ", ticker=" + ticker +
+                "walletId='" + walletId + '\'' +
+                ", coinPair='" + currPair + '\'' +
+                ", amount=" + amount +
                 '}';
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(coinId, coinName, coinPair, ticker);
-    }
 }
