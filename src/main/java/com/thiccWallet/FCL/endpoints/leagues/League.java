@@ -3,80 +3,71 @@ package com.thiccWallet.FCL.endpoints.leagues;
 import com.thiccWallet.FCL.endpoints.users.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "transactions")
+@Table(name = "leagues")
 public class League {
 
     @Id
-    @Column(name = "league_id")
-    private String leagueID;
+    @Column(name = "id")
+    private String id;
 
+    // If something is broken check here
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "creator_id")
-    private User leagueOwner;
+    @JoinColumn(name = "owner_id")
+    private User owner;
 
-    @Column(name = "league_name")
+    @Column(name = "league_name", unique = true, columnDefinition = "VARCHAR CHECK (league_name <> '')")
     private String leagueName;
 
-    @Column
-    private String password;
-
-    @Column(name = "initial_bal")
+    @Column(name = "initial_bal", columnDefinition = "NUMERIC CHECK (INITIAL_BAL > 0)")
     private double initialBalance;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "league_users",
-            joinColumns = { @JoinColumn(name = "user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "league_id") }
-    )
-    List<User> joinedUsers;
+    @Column
+    private LocalDateTime dateCreated;
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "league_users",
+//            joinColumns = { @JoinColumn(name = "user_id") },
+//            inverseJoinColumns = { @JoinColumn(name = "league_id") }
+//    )
+//    List<User> joinedUsers;
 
     public League() {
 
     }
 
-    public League(User leagueOwner, String leagueName, String password, double initialBalance) {
-        this.leagueOwner = leagueOwner;
+    public League(User owner, String leagueName, double initialBalance) {
+        this.owner = owner;
         this.leagueName = leagueName;
-        this.password = password;
         this.initialBalance = initialBalance;
     }
 
-    public League(String leagueID, User leagueOwner, String leagueName, String password, double initialBalance) {
-        this.leagueID = leagueID;
-        this.leagueOwner = leagueOwner;
+    public League(String leagueID, User owner, String leagueName, double initialBalance) {
+        this.id = leagueID;
+        this.owner = owner;
         this.leagueName = leagueName;
-        this.password = password;
         this.initialBalance = initialBalance;
     }
 
-    public League(String leagueID, User leagueOwner, String leagueName, String password, double initialBalance, List<User> joinedUsers) {
-        this.leagueID = leagueID;
-        this.leagueOwner = leagueOwner;
-        this.leagueName = leagueName;
-        this.password = password;
-        this.initialBalance = initialBalance;
-        this.joinedUsers = joinedUsers;
+    public String getId() {
+        return id;
     }
 
-    public String getLeagueID() {
-        return leagueID;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setLeagueID(String leagueID) {
-        this.leagueID = leagueID;
+    public User getOwner() {
+        return owner;
     }
 
-    public User getLeagueOwner() {
-        return leagueOwner;
-    }
-
-    public void setLeagueOwner(User leagueOwner) {
-        this.leagueOwner = leagueOwner;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     public String getLeagueName() {
@@ -87,14 +78,6 @@ public class League {
         this.leagueName = leagueName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public double getInitialBalance() {
         return initialBalance;
     }
@@ -103,12 +86,12 @@ public class League {
         this.initialBalance = initialBalance;
     }
 
-    public List<User> getJoinedUsers() {
-        return joinedUsers;
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
     }
 
-    public void setJoinedUsers(List<User> joinedUsers) {
-        this.joinedUsers = joinedUsers;
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     @Override
@@ -116,23 +99,22 @@ public class League {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         League league = (League) o;
-        return Double.compare(league.initialBalance, initialBalance) == 0 && Objects.equals(leagueID, league.leagueID) && Objects.equals(leagueOwner, league.leagueOwner) && Objects.equals(leagueName, league.leagueName) && Objects.equals(password, league.password) && Objects.equals(joinedUsers, league.joinedUsers);
+        return Double.compare(league.initialBalance, initialBalance) == 0 && Objects.equals(id, league.id) && Objects.equals(owner, league.owner) && Objects.equals(leagueName, league.leagueName) && Objects.equals(dateCreated, league.dateCreated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(leagueID, leagueOwner, leagueName, password, initialBalance, joinedUsers);
+        return Objects.hash(id, owner, leagueName, initialBalance, dateCreated);
     }
 
     @Override
     public String toString() {
         return "League{" +
-                "leagueID='" + leagueID + '\'' +
-                ", leagueOwner=" + leagueOwner +
+                "id='" + id + '\'' +
+                ", owner=" + owner +
                 ", leagueName='" + leagueName + '\'' +
-                ", password='" + password + '\'' +
                 ", initialBalance=" + initialBalance +
-                ", joinedUsers=" + joinedUsers +
+                ", dateCreated=" + dateCreated +
                 '}';
     }
 }

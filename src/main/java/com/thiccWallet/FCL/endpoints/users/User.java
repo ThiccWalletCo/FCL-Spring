@@ -22,14 +22,15 @@ public class User {
     @Column(nullable = false, unique = true, columnDefinition = "VARCHAR CHECK (username <> '')")
     private String username;
 
-    @Column(nullable = false, unique = false, columnDefinition = "VARCHAR CHECK (password <> '')")
+    @Column(nullable = false, columnDefinition = "VARCHAR CHECK (password <> '')")
     private String password;
 
     @Column(nullable = true, unique = false)
     private LocalDateTime dateCreated;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "joinedUsers")
-    private List<League> joinedLeagues;
+    // Set up wallet table to be the join table
+//    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "joinedUsers")
+//    private List<League> joinedLeagues;
 
     public User(){
 

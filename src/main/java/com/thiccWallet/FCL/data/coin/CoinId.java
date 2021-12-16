@@ -1,8 +1,10 @@
 package com.thiccWallet.FCL.data.coin;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class CoinId implements Serializable {
 
     private String currPair;
@@ -16,7 +18,21 @@ public class CoinId implements Serializable {
         //combination of curr_pair and wallet_id is always unique
     }
 
+    public String getCurrPair() {
+        return currPair;
+    }
 
+    public void setCurrPair(String currPair) {
+        this.currPair = currPair;
+    }
+
+    public String getWalletId() {
+        return walletId;
+    }
+
+    public void setWalletId(String walletId) {
+        this.walletId = walletId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -29,5 +45,13 @@ public class CoinId implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(currPair, walletId);
+    }
+
+    @Override
+    public String toString() {
+        return "CoinId{" +
+                "currPair='" + currPair + '\'' +
+                ", walletId='" + walletId + '\'' +
+                '}';
     }
 }
