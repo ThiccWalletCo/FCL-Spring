@@ -1,13 +1,19 @@
 package com.thiccWallet.FCL.data.coin;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CoinId implements Serializable {
 
+    @JsonProperty("id")
     private String currPair;
+
     private String walletId;
 
     public CoinId(){};
