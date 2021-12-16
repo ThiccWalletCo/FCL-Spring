@@ -1,7 +1,6 @@
 package com.thiccWallet.FCL.endpoints.leagues.dtos;
 
 import com.thiccWallet.FCL.endpoints.leagues.League;
-import com.thiccWallet.FCL.endpoints.users.User;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +8,7 @@ public class LeagueResponse {
 
     private String leagueName;
     private double initialBal;
-    private User creator;
+    private String creatorName;
     private LocalDateTime dateCreated;
 
     public LeagueResponse(){
@@ -19,7 +18,7 @@ public class LeagueResponse {
     public LeagueResponse(League league) {
         this.leagueName = league.getLeagueName();
         this.initialBal = league.getInitialBalance();
-        this.creator = league.getOwner();
+        this.creatorName = league.getOwner().getUsername();
         this.dateCreated = league.getDateCreated();
     }
 
@@ -39,12 +38,12 @@ public class LeagueResponse {
         this.initialBal = initialBal;
     }
 
-    public User getCreator() {
-        return creator;
+    public String getCreatorName() {
+        return creatorName;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
     }
 
     public LocalDateTime getDateCreated() {
@@ -60,7 +59,7 @@ public class LeagueResponse {
         return "LeagueResponse{" +
                 "leagueName='" + leagueName + '\'' +
                 ", initialBal=" + initialBal +
-                ", creator=" + creator +
+                ", creatorName=" + creatorName +
                 ", dateCreated=" + dateCreated +
                 '}';
     }
