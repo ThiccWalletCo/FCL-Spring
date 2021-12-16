@@ -21,7 +21,7 @@ public class CoinController {
 
     @GetMapping(value = "/{walletId}/{currPair}", produces = "application/json")
     public Coin getCoin(@PathVariable String walletId, @PathVariable String currPair){
-        return coinService.getCoin(walletId, currPair);
+        return coinService.getCoin(new CoinId(currPair, walletId)).get();
     }
 
     @GetMapping(value = "/{walletId}", produces = "application/json")

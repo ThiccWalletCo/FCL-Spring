@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@IdClass(CoinId.class)
 @Table(name = "coins")
 public class Coin {
 

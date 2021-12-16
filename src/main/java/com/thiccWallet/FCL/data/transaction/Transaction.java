@@ -23,6 +23,7 @@ public class Transaction {
     @Column(name = "wallet_value_after_transaction", nullable = false)
     private Double walletValueAfterTransaction;
 
+    @ManyToOne
     @JoinColumn(nullable = false)
     private Wallet wallet;
 

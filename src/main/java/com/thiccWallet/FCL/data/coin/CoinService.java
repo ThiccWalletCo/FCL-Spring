@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,12 +28,13 @@ public class CoinService {
     }
 
     @Transactional
-    public Coin getCoin(String walletId, String currPair) {
-        return coinRepo.findCoinByWalletIdAndCurrPair(walletId, currPair);
+    public Optional<Coin> getCoin(CoinId coinId) {
+        return coinRepo.findById(coinId);
     }
 
     public List<Coin> getCoinsByWallet(String walletId) {
-        return coinRepo.findCoinsByWalletId(walletId);
+        //return coinRepo.findCoinsByWalletId(walletId);
+        return null;
     }
 
 

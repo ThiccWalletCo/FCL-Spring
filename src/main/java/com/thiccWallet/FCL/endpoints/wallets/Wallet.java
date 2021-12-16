@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Wallet {
 
     @Id
-    @Column(name = "wallet_id")
+    @Column(name = "wallet_id", columnDefinition = "VARCHAR")
     private String walletID;
 
     @ManyToOne
