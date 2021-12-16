@@ -1,12 +1,6 @@
 package com.thiccWallet.FCL;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.javafx.collections.MappingChange;
-import com.thiccWallet.FCL.data.coin.Coin;
 import com.thiccWallet.FCL.data.coin.CoinbaseDAO;
-import jdk.nashorn.internal.parser.JSONParser;
-import net.minidev.json.JSONObject;
 
 import java.util.List;
 
