@@ -1,14 +1,16 @@
 package com.thiccWallet.FCL.data.coin;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+@IdClass(CoinId.class)
 @Table(name = "coins")
 public class Coin {
 
-    @EmbeddedId
-    private CoinId coinId;
 
     @Column(nullable = false, columnDefinition = "NUMERIC CHECK (amount > 0)")
     private double amount;//price of given coin in double format
