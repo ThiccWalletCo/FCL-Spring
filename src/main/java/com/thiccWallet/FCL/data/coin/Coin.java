@@ -7,25 +7,20 @@ import java.util.Objects;
 @IdClass(CoinId.class)
 @Table(name = "coins")
 public class Coin {
-//    @Id
-//    private String walletId;
-//
-//    @Id
-//    private String currPair;
 
     @EmbeddedId
     private CoinId coinId;
 
-    @Column(nullable = false, unique = false, columnDefinition = "NUMERIC")
+    @Column(nullable = false, columnDefinition = "NUMERIC CHECK (amount > 0)")
     private double amount;//price of given coin in double format
+
+    public Coin() {}
 
     public Coin(String walletId, String currPair, double amount) {
         this.coinId.setWalletId(walletId);
         this.coinId.setCurrPair(currPair);
         this.amount = amount;
     }
-
-    public Coin() {}
 
     public Coin(Coin coin) {
         this.coinId.setWalletId(coin.coinId.getWalletId());

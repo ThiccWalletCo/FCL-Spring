@@ -3,6 +3,7 @@ package com.thiccWallet.FCL.endpoints.leagues;
 import com.thiccWallet.FCL.endpoints.users.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,12 +23,11 @@ public class League {
     @Column(name = "league_name", unique = true, columnDefinition = "VARCHAR CHECK (league_name <> '')")
     private String leagueName;
 
-    // QOL goal protect certain leagues with password
-//    @Column
-//    private String password;
-
     @Column(name = "initial_bal", columnDefinition = "NUMERIC CHECK (INITIAL_BAL > 0)")
     private double initialBalance;
+
+    @Column
+    private LocalDateTime dateCreated;
 
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(
@@ -86,26 +86,35 @@ public class League {
         this.initialBalance = initialBalance;
     }
 
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         League league = (League) o;
-        return Double.compare(league.initialBalance, initialBalance) == 0 && Objects.equals(id, league.id) && Objects.equals(owner, league.owner) && Objects.equals(leagueName, league.leagueName);
+        return Double.compare(league.initialBalance, initialBalance) == 0 && Objects.equals(id, league.id) && Objects.equals(owner, league.owner) && Objects.equals(leagueName, league.leagueName) && Objects.equals(dateCreated, league.dateCreated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, owner, leagueName, initialBalance);
+        return Objects.hash(id, owner, leagueName, initialBalance, dateCreated);
     }
 
     @Override
     public String toString() {
         return "League{" +
-                "leagueID='" + id + '\'' +
-                ", leagueOwner=" + owner +
+                "id='" + id + '\'' +
+                ", owner=" + owner +
                 ", leagueName='" + leagueName + '\'' +
                 ", initialBalance=" + initialBalance +
+                ", dateCreated=" + dateCreated +
                 '}';
     }
 }
