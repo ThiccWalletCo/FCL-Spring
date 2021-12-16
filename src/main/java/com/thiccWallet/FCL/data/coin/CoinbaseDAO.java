@@ -48,14 +48,14 @@ public class CoinbaseDAO {
             TypeFactory typeFactory = mapper.getTypeFactory();
 
             //pulls out only currency pairs
-            List<Coin> coins = mapper.
+            List<CoinId> coins = mapper.
                     readValue(json, typeFactory.
-                            constructCollectionType(List.class, Coin.class));
+                            constructCollectionType(List.class, CoinId.class));
 
             coins = coins.stream().filter(c -> c.getCurrPair().endsWith("USD")).collect(Collectors.toList());
             //this is dirty
             List<String> currPairs = new ArrayList<>();
-            for(Coin c : coins){
+            for(CoinId c : coins){
                 currPairs.add(c.getCurrPair());
             }
             return currPairs;
