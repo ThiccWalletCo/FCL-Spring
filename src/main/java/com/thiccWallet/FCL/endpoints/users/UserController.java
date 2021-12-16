@@ -18,11 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    /** TODO
-     * Make  a UserService
-     * Make a UserDAO
-     * Make DTOs
-     */
 
     private UserService userService;
 
