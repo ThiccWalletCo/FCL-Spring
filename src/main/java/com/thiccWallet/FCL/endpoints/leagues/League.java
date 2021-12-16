@@ -12,12 +12,12 @@ import java.util.Objects;
 public class League {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "league_id")
     private String id;
 
     // If something is broken check here
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "creator_id")
     private User owner;
 
     @Column(name = "league_name", unique = true, columnDefinition = "VARCHAR CHECK (league_name <> '')")
@@ -26,7 +26,7 @@ public class League {
     @Column(name = "initial_bal", columnDefinition = "NUMERIC CHECK (INITIAL_BAL > 0)")
     private double initialBalance;
 
-    @Column
+    @Column(name = "date_created")
     private LocalDateTime dateCreated;
 
 //    @ManyToMany(fetch = FetchType.LAZY)
