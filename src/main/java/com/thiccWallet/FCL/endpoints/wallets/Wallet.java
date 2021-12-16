@@ -4,6 +4,7 @@ import com.thiccWallet.FCL.endpoints.leagues.League;
 import com.thiccWallet.FCL.endpoints.users.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -22,14 +23,11 @@ public class Wallet {
     @JoinColumn(name = "league_id")
     private League league;
 
-    @Column(name = "initial_bal")
-    private double initialBalance;
-
-    @Column(name = "wallet_bal")
-    private double walletBalance;
-
-    @Column(name = "cash_bal")
+    @Column(name = "cash_bal", columnDefinition = "NUMERIC CHECK (INITIAL_BAL >= 0)")
     private double cashBalance;
+
+    @Column(name = "date_created")
+    private LocalDateTime dateCreated;
 
     //------------------------------------------------
 
@@ -37,21 +35,20 @@ public class Wallet {
 
     }
 
-    public Wallet(User owner, League league, double initialBalance, double walletBalance, double cashBalance) {
+    public Wallet(User owner, League league, double cashBalance) {
         this.owner = owner;
         this.league = league;
-        this.initialBalance = initialBalance;
-        this.walletBalance = walletBalance;
         this.cashBalance = cashBalance;
+
+        this.dateCreated = LocalDateTime.now();
     }
 
-    public Wallet(String walletID, User owner, League league, double initialBalance, double walletBalance, double cashBalance) {
+    public Wallet(String walletID, User owner, League league, double cashBalance, LocalDateTime dateCreated) {
         this.walletID = walletID;
         this.owner = owner;
         this.league = league;
-        this.initialBalance = initialBalance;
-        this.walletBalance = walletBalance;
         this.cashBalance = cashBalance;
+        this.dateCreated = dateCreated;
     }
 
     //-------------------------------------------------------
@@ -80,22 +77,6 @@ public class Wallet {
         this.league = league;
     }
 
-    public double getInitialBalance() {
-        return initialBalance;
-    }
-
-    public void setInitialBalance(double initialBalance) {
-        this.initialBalance = initialBalance;
-    }
-
-    public double getWalletBalance() {
-        return walletBalance;
-    }
-
-    public void setWalletBalance(double walletBalance) {
-        this.walletBalance = walletBalance;
-    }
-
     public double getCashBalance() {
         return cashBalance;
     }
@@ -104,19 +85,28 @@ public class Wallet {
         this.cashBalance = cashBalance;
     }
 
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
     //--------------------------------------------------------------
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Wallet wallet = (Wallet) o;
-        return Double.compare(wallet.initialBalance, initialBalance) == 0 && Double.compare(wallet.walletBalance, walletBalance) == 0 && Double.compare(wallet.cashBalance, cashBalance) == 0 && Objects.equals(walletID, wallet.walletID) && Objects.equals(owner, wallet.owner) && Objects.equals(league, wallet.league);
+        return Double.compare(wallet.cashBalance, cashBalance) == 0 && Objects.equals(walletID, wallet.walletID) && Objects.equals(owner, wallet.owner) && Objects.equals(league, wallet.league) && Objects.equals(dateCreated, wallet.dateCreated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(walletID, owner, league, initialBalance, walletBalance, cashBalance);
+        return Objects.hash(walletID, owner, league, cashBalance, dateCreated);
     }
 
     @Override
@@ -125,9 +115,8 @@ public class Wallet {
                 "walletID='" + walletID + '\'' +
                 ", owner=" + owner +
                 ", league=" + league +
-                ", initialBalance=" + initialBalance +
-                ", walletBalance=" + walletBalance +
                 ", cashBalance=" + cashBalance +
+                ", dateCreated=" + dateCreated +
                 '}';
     }
 }
