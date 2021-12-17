@@ -19,8 +19,7 @@ public class Coin {
     public Coin() {}
 
     public Coin(String walletId, String currPair, double amount) {
-        this.coinId.setWalletId(walletId);
-        this.coinId.setCurrPair(currPair);
+        this.coinId = new CoinId(currPair, walletId);
         this.amount = amount;
     }
 

@@ -6,6 +6,8 @@ import com.thiccWallet.FCL.data.coin.dtos.responses.CoinResponse;
 import com.thiccWallet.FCL.endpoints.leagues.League;
 import com.thiccWallet.FCL.endpoints.leagues.LeagueService;
 import com.thiccWallet.FCL.endpoints.users.User;
+import com.thiccWallet.FCL.endpoints.users.UserRepository;
+import com.thiccWallet.FCL.endpoints.users.UserService;
 import com.thiccWallet.FCL.endpoints.wallets.dtos.responses.JoinSuccessResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +26,16 @@ public class WalletController {
     private WalletService walletService;
     private LeagueService leagueService;
     private CoinService coinService;
+    private UserService userService;
 
-    public WalletController(WalletService walletService, CoinService coinService, LeagueService leagueService) {
+    public WalletController(WalletService walletService, CoinService coinService, LeagueService leagueService, UserService userService) {
         this.walletService = walletService;
         this.coinService = coinService;
         this.leagueService = leagueService;
+        this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/coins")
     public List<CoinResponse> getWalletCoins(HttpServletRequest req) {
         HttpSession session = req.getSession(false);
 
@@ -65,6 +69,11 @@ public class WalletController {
         if (!leagueOptional.isPresent()) throw new NoSuchElementException("Could not locate a league given: " + leagueName);
 
         User authUser = (User)session.getAttribute("authorizedUser");
+        League currLeague = leagueService.findLeagueByLeagueName(leagueName).get();
+        String leagueId = currLeague.getId();
+        if(userService.isUserInLeague(leagueId, authUser.getId())){
+            throw new InvalidRequestException("user already exists in league");
+        }
 
         return walletService.createWallet(leagueOptional.get(), authUser);
     }
