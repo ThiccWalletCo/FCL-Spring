@@ -92,7 +92,7 @@ public class UserService {
         return !userRepo.findUserByEmail(email).isPresent();
     }
 
-    @Transactional(readOnly = true)
+    //@Transactional(readOnly = true)
     private void checkCredentialsNotTaken(String username, String email) {
         boolean usernameTaken = userRepo.findUserByUsername(username).isPresent();
         boolean emailTaken = userRepo.findUserByEmail(email).isPresent();
@@ -103,6 +103,17 @@ public class UserService {
             if (emailTaken) msg += "\n\t- email: " + email;
             throw new DuplicateCredentialsException(msg);
         }
+    }
+
+    public boolean isUserInLeague(String leagueId, String userId){
+        return userRepo.findUsersByLeagueId(leagueId).stream().anyMatch(u -> u.getId().equals(userId));
+//        List<User> leagueUsers = userRepo.findUsersByLeagueId(leagueId);
+//        for(User u : leagueUsers){
+//            if(u.getId().equals(userId)){
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     private boolean isUserCreationRequestValid(UserCreationRequest newUser) {
