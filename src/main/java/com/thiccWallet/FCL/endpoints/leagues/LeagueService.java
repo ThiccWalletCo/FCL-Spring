@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +43,7 @@ public class LeagueService {
             throw new InvalidRequestException("Invalid Credentials, either empty name field or balance < 1");
         }
 
-        if (!isLeagueNameAvailable(creationRequest.getName())) {
+        if (!findLeagueByLeagueName(creationRequest.getName()).isPresent()) {
             throw new DuplicateCredentialsException("League name is already taken.");
         }
 
@@ -64,8 +65,8 @@ public class LeagueService {
     }
 
     //returns true if the league name does not exist in database
-    public boolean isLeagueNameAvailable(String leagueName){
-        return !leagueRepo.findLeagueByLeagueName(leagueName).isPresent();
+    public Optional<League> findLeagueByLeagueName(String leagueName){
+        return leagueRepo.findLeagueByLeagueName(leagueName);
     }
 
 }

@@ -1,7 +1,7 @@
 package com.thiccWallet.FCL.session.login;
 
 import com.thiccWallet.FCL.common.exception.DuplicateLoginAttemptException;
-import com.thiccWallet.FCL.common.exception.NoSuchUserException;
+import com.thiccWallet.FCL.common.exception.NoSuchElementException;
 import com.thiccWallet.FCL.common.exception.NotLoggedInException;
 import com.thiccWallet.FCL.session.login.dtos.request.LoginRequest;
 import com.thiccWallet.FCL.endpoints.users.User;
@@ -43,7 +43,7 @@ public class LoginController {
             session.setAttribute("authorizedUser", authorizedUser);
 
         } else {
-            throw new NoSuchUserException("Could not locate user given provided credentials");
+            throw new NoSuchElementException("Could not locate user given provided credentials");
         }
     }
 

@@ -25,7 +25,7 @@ public class ErrorHandlingAspect {
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({NoSuchUserException.class})
+    @ExceptionHandler({NoSuchElementException.class})
     public ErrorResponse handleNotFoundRequests(Exception e) {
         return new ErrorResponse(404, e);
     }
