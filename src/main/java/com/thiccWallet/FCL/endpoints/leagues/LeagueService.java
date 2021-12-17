@@ -1,8 +1,7 @@
 package com.thiccWallet.FCL.endpoints.leagues;
 
-import com.thiccWallet.FCL.endpoints.leagues.dtos.LeagueResponse;
+import com.thiccWallet.FCL.endpoints.leagues.dtos.responses.LeagueResponse;
 import com.thiccWallet.FCL.endpoints.users.User;
-import com.thiccWallet.FCL.endpoints.users.dtos.responses.UserResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;

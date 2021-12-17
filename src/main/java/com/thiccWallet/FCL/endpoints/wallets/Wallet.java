@@ -1,10 +1,12 @@
 package com.thiccWallet.FCL.endpoints.wallets;
 
+import com.thiccWallet.FCL.data.coin.Coin;
 import com.thiccWallet.FCL.endpoints.leagues.League;
 import com.thiccWallet.FCL.endpoints.users.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -29,6 +31,9 @@ public class Wallet {
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
 
+    @OneToMany
+    private List<Coin> walletCoins;
+
     //------------------------------------------------
 
     public Wallet() {
@@ -49,6 +54,15 @@ public class Wallet {
         this.league = league;
         this.cashBalance = cashBalance;
         this.dateCreated = dateCreated;
+    }
+
+    public Wallet(String walletID, User owner, League league, double cashBalance, LocalDateTime dateCreated, List<Coin> walletCoins) {
+        this.walletID = walletID;
+        this.owner = owner;
+        this.league = league;
+        this.cashBalance = cashBalance;
+        this.dateCreated = dateCreated;
+        this.walletCoins = walletCoins;
     }
 
     //-------------------------------------------------------
@@ -91,6 +105,14 @@ public class Wallet {
 
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public List<Coin> getWalletCoins() {
+        return walletCoins;
+    }
+
+    public void setWalletCoins(List<Coin> walletCoins) {
+        this.walletCoins = walletCoins;
     }
 
     //--------------------------------------------------------------

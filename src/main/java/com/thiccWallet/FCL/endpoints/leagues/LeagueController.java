@@ -1,6 +1,6 @@
 package com.thiccWallet.FCL.endpoints.leagues;
 
-import com.thiccWallet.FCL.endpoints.leagues.dtos.LeagueResponse;
+import com.thiccWallet.FCL.endpoints.leagues.dtos.responses.LeagueResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,5 +19,7 @@ public class LeagueController {
 
     //Get all leagues
     @GetMapping(produces = "application/json")
-    public List<LeagueResponse> getLeagues() { return leagueService.getAllLeagues();}
+    public List<LeagueResponse> getLeagues() {
+        return leagueService.getAllLeagues();
+    }
 }

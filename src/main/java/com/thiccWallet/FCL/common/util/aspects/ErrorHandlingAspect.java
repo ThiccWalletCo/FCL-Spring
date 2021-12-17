@@ -19,7 +19,7 @@ public class ErrorHandlingAspect {
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler({NotLoggedInException.class, DuplicateLoginAttemptException.class})
+    @ExceptionHandler({NotLoggedInException.class, DuplicateLoginAttemptException.class, NoWalletException.class})
     public ErrorResponse handleUnauthorizedRequests(Exception e) {
         return new ErrorResponse(401, e);
     }

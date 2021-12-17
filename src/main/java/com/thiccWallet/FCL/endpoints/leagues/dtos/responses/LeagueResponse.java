@@ -1,4 +1,4 @@
-package com.thiccWallet.FCL.endpoints.leagues.dtos;
+package com.thiccWallet.FCL.endpoints.leagues.dtos.responses;
 
 import com.thiccWallet.FCL.endpoints.leagues.League;
 
