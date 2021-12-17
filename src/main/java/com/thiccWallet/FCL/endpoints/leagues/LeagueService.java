@@ -38,7 +38,7 @@ public class LeagueService {
             throw new InvalidRequestException("Invalid Credentials, either empty name field or balance < 1");
         }
 
-        if (!findLeagueByLeagueName(creationRequest.getName()).isPresent()) {
+        if (leagueRepo.findLeagueByLeagueName(creationRequest.getName()).isPresent()) {
             throw new DuplicateCredentialsException("League name is already taken.");
         }
 
@@ -59,7 +59,6 @@ public class LeagueService {
         return creationRequest.getInitialBalance() >= 1;
     }
 
-    //returns true if the league name does not exist in database
     public Optional<League> findLeagueByLeagueName(String leagueName){
         return leagueRepo.findLeagueByLeagueName(leagueName);
     }

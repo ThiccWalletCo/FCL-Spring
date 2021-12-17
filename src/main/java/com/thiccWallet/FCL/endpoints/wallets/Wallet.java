@@ -25,14 +25,11 @@ public class Wallet {
     @JoinColumn(name = "league_id")
     private League league;
 
-    @Column(name = "cash_bal", columnDefinition = "NUMERIC CHECK (INITIAL_BAL >= 0)")
+    @Column(name = "cash_bal", columnDefinition = "NUMERIC")
     private double cashBalance;
 
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
-
-    @OneToMany
-    private List<Coin> walletCoins;
 
     //------------------------------------------------
 
@@ -54,15 +51,6 @@ public class Wallet {
         this.league = league;
         this.cashBalance = cashBalance;
         this.dateCreated = dateCreated;
-    }
-
-    public Wallet(String walletID, User owner, League league, double cashBalance, LocalDateTime dateCreated, List<Coin> walletCoins) {
-        this.walletID = walletID;
-        this.owner = owner;
-        this.league = league;
-        this.cashBalance = cashBalance;
-        this.dateCreated = dateCreated;
-        this.walletCoins = walletCoins;
     }
 
     //-------------------------------------------------------
@@ -105,14 +93,6 @@ public class Wallet {
 
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    public List<Coin> getWalletCoins() {
-        return walletCoins;
-    }
-
-    public void setWalletCoins(List<Coin> walletCoins) {
-        this.walletCoins = walletCoins;
     }
 
     //--------------------------------------------------------------

@@ -23,4 +23,37 @@ public class JoinSuccessResponse {
         this.leagueName = wallet.getLeague().getLeagueName();
         this.dateCreated = wallet.getDateCreated();
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getLeagueName() {
+        return leagueName;
+    }
+
+    public void setLeagueName(String leagueName) {
+        this.leagueName = leagueName;
+    }
+
+    public LocalDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(LocalDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    @Override
+    public String toString() {
+        return "JoinSuccessResponse{" +
+                "username='" + username + '\'' +
+                ", leagueName='" + leagueName + '\'' +
+                ", dateCreated=" + dateCreated +
+                '}';
+    }
 }

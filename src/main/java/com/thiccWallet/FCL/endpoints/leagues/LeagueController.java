@@ -5,6 +5,7 @@ import com.thiccWallet.FCL.endpoints.leagues.dtos.requests.LeagueCreationRequest
 import com.thiccWallet.FCL.endpoints.leagues.dtos.responses.LeagueCreatedResponse;
 import com.thiccWallet.FCL.endpoints.leagues.dtos.responses.LeagueResponse;
 import com.thiccWallet.FCL.endpoints.users.User;
+import com.thiccWallet.FCL.endpoints.users.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +20,11 @@ import java.util.Optional;
 public class LeagueController {
 
     private LeagueService leagueService;
+    private UserService userService;
 
-    public LeagueController(LeagueService leagueService) {
+    public LeagueController(LeagueService leagueService, UserService userService) {
         this.leagueService = leagueService;
+        this.userService = userService;
     }
 
     //Get all leagues
@@ -48,7 +51,7 @@ public class LeagueController {
     // this endpoint should be hit right before /wallet/select
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/select/{leagueName}")
-    public void selectLeague(@RequestParam String leagueName, HttpServletRequest req) {
+    public void selectLeague(@PathVariable String leagueName, HttpServletRequest req) {
         HttpSession session = req.getSession(false);
 
         if (session == null) {
@@ -67,7 +70,9 @@ public class LeagueController {
         User authUser = (User)session.getAttribute("authorizedUser");
         League league = leagueOptional.get();
 
-        if (!league.joinedUsers.stream().anyMatch(user -> user.equals(authUser))){
+        List<User> joinedUsers = userService.getUsersInLeague(league.getId());
+
+        if (!joinedUsers.stream().anyMatch(user -> user.equals(authUser))){
             throw new NotJoinedException("User has not joined this league!");
         }
 

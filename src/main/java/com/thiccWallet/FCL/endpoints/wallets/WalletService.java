@@ -14,6 +14,10 @@ public class WalletService {
 
     WalletRepository walletRepo;
 
+    public WalletService(WalletRepository walletRepo) {
+        this.walletRepo = walletRepo;
+    }
+
     //uses annotations in the rest controller
     //if user_id is provided, returns wallets associated with user
     //if league is provided, returns wallets associated with league
@@ -43,7 +47,7 @@ public class WalletService {
     }
 
     public Wallet selectWalletByIds(String leagueId, String userId) {
-        return walletRepo.findWalletByLeagueIdAndUserId(leagueId, userId).get();
+        return walletRepo.findWalletByLeagueIdAndOwnerId(leagueId, userId).get();
     }
 
     public void deleteWallet(String walletID) {

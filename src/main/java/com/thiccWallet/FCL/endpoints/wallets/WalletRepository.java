@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface WalletRepository extends CrudRepository<Wallet, String> {
 
-    Optional<Wallet> findWalletByLeagueIdAndUserId(String leagueId, String userId);
+    Optional<Wallet> findWalletByLeagueIdAndOwnerId(String leagueId, String userId);
 }

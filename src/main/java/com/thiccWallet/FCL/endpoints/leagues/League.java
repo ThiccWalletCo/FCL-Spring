@@ -31,9 +31,6 @@ public class League {
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
 
-    @OneToMany
-    List<User> joinedUsers;
-
     public League() {
 
     }

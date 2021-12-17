@@ -8,9 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CoinRepository extends CrudRepository<Coin, CoinId> {
-
-//    @Query("SELECT coin.currPair from Coin coin")
-//    List<Coin> getAllCoins();
-
-    //List<Coin> findCoinsByWalletId(String walletId);
+    @Query("from Coin where wallet_id = :walletId")
+    List<Coin> findCoinsByWalletId(String walletId);
 }

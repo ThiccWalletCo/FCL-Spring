@@ -1,6 +1,7 @@
 package com.thiccWallet.FCL.endpoints.wallets;
 
 import com.thiccWallet.FCL.common.exception.*;
+import com.thiccWallet.FCL.data.coin.CoinService;
 import com.thiccWallet.FCL.data.coin.dtos.responses.CoinResponse;
 import com.thiccWallet.FCL.endpoints.leagues.League;
 import com.thiccWallet.FCL.endpoints.leagues.LeagueService;
@@ -17,13 +18,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/wallet")
 public class WalletController {
 
     private WalletService walletService;
     private LeagueService leagueService;
+    private CoinService coinService;
 
-    public WalletController(WalletService walletService) {
+    public WalletController(WalletService walletService, CoinService coinService, LeagueService leagueService) {
         this.walletService = walletService;
+        this.coinService = coinService;
+        this.leagueService = leagueService;
     }
 
     @GetMapping
@@ -40,15 +45,16 @@ public class WalletController {
             throw new NoWalletException("Cannot Access wallet, user has not selected a league.");
         }
 
-        return wallet.getWalletCoins()
+        return coinService.getCoinsByWallet(wallet.getWalletID())
                 .stream()
                 .map(CoinResponse::new)
                 .collect(Collectors.toList());
     }
 
 
-    @PostMapping("/{leagueName}")
-    public JoinSuccessResponse joinLeague(@RequestParam String leagueName, HttpServletRequest req) {
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(produces = "application/json", value = "/{leagueName}")
+    public JoinSuccessResponse joinLeague(@PathVariable String leagueName, HttpServletRequest req) {
         HttpSession session = req.getSession(false);
 
         if (session == null) throw new NotLoggedInException("Cannot join League, user not logged in.");

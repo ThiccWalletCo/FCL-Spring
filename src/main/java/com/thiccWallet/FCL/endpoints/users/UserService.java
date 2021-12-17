@@ -120,4 +120,7 @@ public class UserService {
         return field != null && !field.trim().equals("");
     }
 
+    public List<User> getUsersInLeague(String leagueId) {
+        return userRepo.findUsersByLeagueId(leagueId);
+    }
 }

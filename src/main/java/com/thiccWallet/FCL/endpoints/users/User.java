@@ -28,10 +28,6 @@ public class User {
     @Column(nullable = true, unique = false)
     private LocalDateTime dateCreated;
 
-    // Set up wallet table to be the join table
-//    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "joinedUsers")
-//    private List<League> joinedLeagues;
-
     public User(){
 
     }
