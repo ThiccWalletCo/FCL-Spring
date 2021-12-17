@@ -33,8 +33,7 @@ public class CoinService {
     }
 
     public List<Coin> getCoinsByWallet(String walletId) {
-        //return coinRepo.findCoinsByWalletId(walletId);
-        return null;
+        return coinRepo.findCoinsByWalletId(walletId);
     }
 
 

@@ -1,11 +1,13 @@
 package com.thiccWallet.FCL.endpoints.leagues;
 
+import com.thiccWallet.FCL.endpoints.leagues.dtos.requests.LeagueCreationRequest;
 import com.thiccWallet.FCL.endpoints.users.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "leagues")
@@ -29,14 +31,6 @@ public class League {
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "league_users",
-//            joinColumns = { @JoinColumn(name = "user_id") },
-//            inverseJoinColumns = { @JoinColumn(name = "league_id") }
-//    )
-//    List<User> joinedUsers;
-
     public League() {
 
     }
@@ -45,6 +39,9 @@ public class League {
         this.owner = owner;
         this.leagueName = leagueName;
         this.initialBalance = initialBalance;
+
+        this.id = UUID.randomUUID().toString();
+        this.dateCreated = LocalDateTime.now();
     }
 
     public League(String leagueID, User owner, String leagueName, double initialBalance) {
@@ -52,6 +49,17 @@ public class League {
         this.owner = owner;
         this.leagueName = leagueName;
         this.initialBalance = initialBalance;
+
+        this.dateCreated = LocalDateTime.now();
+    }
+
+    public League(LeagueCreationRequest creationRequest, User user) {
+        this.owner = user;
+        this.leagueName = creationRequest.getName();
+        this.initialBalance = creationRequest.getInitialBalance();
+
+        this.id = UUID.randomUUID().toString();
+        this.dateCreated = LocalDateTime.now();
     }
 
     public String getId() {

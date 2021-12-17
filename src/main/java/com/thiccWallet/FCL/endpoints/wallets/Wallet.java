@@ -1,10 +1,12 @@
 package com.thiccWallet.FCL.endpoints.wallets;
 
+import com.thiccWallet.FCL.data.coin.Coin;
 import com.thiccWallet.FCL.endpoints.leagues.League;
 import com.thiccWallet.FCL.endpoints.users.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,7 +25,7 @@ public class Wallet {
     @JoinColumn(name = "league_id")
     private League league;
 
-    @Column(name = "cash_bal", columnDefinition = "NUMERIC CHECK (INITIAL_BAL >= 0)")
+    @Column(name = "cash_bal", columnDefinition = "NUMERIC")
     private double cashBalance;
 
     @Column(name = "date_created")
