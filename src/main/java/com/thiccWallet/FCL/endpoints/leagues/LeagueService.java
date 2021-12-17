@@ -32,11 +32,6 @@ public class LeagueService {
         return leagues;
     }
 
-    //adds a user to specified league
-    public boolean addUserToLeague(User user, League league){
-        return false;
-    }
-
     //creates a new league with a name and initial amount
     public LeagueCreatedResponse createLeague(LeagueCreationRequest creationRequest, User authUser){
         if (!isLeagueValid(creationRequest)) {

@@ -41,4 +41,12 @@ public class WalletService {
 
         return new JoinSuccessResponse(walletRepo.save(newWallet));
     }
+
+    public Wallet selectWalletByIds(String leagueId, String userId) {
+        return walletRepo.findWalletByLeagueIdAndUserId(leagueId, userId).get();
+    }
+
+    public void deleteWallet(String walletID) {
+        walletRepo.deleteById(walletID);
+    }
 }

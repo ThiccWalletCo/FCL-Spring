@@ -31,13 +31,8 @@ public class League {
     @Column(name = "date_created")
     private LocalDateTime dateCreated;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "league_users",
-//            joinColumns = { @JoinColumn(name = "user_id") },
-//            inverseJoinColumns = { @JoinColumn(name = "league_id") }
-//    )
-//    List<User> joinedUsers;
+    @OneToMany
+    List<User> joinedUsers;
 
     public League() {
 
