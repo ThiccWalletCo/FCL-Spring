@@ -16,7 +16,8 @@ public class ErrorHandlingAspect {
     @ExceptionHandler(
             {InvalidRequestException.class,
              DuplicateCredentialsException.class,
-             MethodArgumentNotValidException.class})
+             MethodArgumentNotValidException.class,
+             InsufficientFundsException.class})
     public ErrorResponse handleBadRequests(Exception e) {
         return new ErrorResponse(400, e);
     }

@@ -53,4 +53,9 @@ public class WalletService {
     public void deleteWallet(String walletID) {
         walletRepo.deleteById(walletID);
     }
+
+    //updates the total UsdWallet balance
+    public Wallet updateWallet(Wallet wallet) {
+       return walletRepo.save(wallet);
+    }
 }
