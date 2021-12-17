@@ -1,5 +1,9 @@
 package com.thiccWallet.FCL.endpoints.leagues;
 
+import com.thiccWallet.FCL.common.exception.DuplicateCredentialsException;
+import com.thiccWallet.FCL.common.exception.InvalidRequestException;
+import com.thiccWallet.FCL.endpoints.leagues.dtos.requests.LeagueCreationRequest;
+import com.thiccWallet.FCL.endpoints.leagues.dtos.responses.LeagueCreatedResponse;
 import com.thiccWallet.FCL.endpoints.leagues.dtos.responses.LeagueResponse;
 import com.thiccWallet.FCL.endpoints.users.User;
 import org.springframework.stereotype.Service;
@@ -33,9 +37,18 @@ public class LeagueService {
     }
 
     //creates a new league with a name and initial amount
-    public League createLeague(String name, double initialAmount){
-        //TODO: implement me
-        return null;
+    public LeagueCreatedResponse createLeague(LeagueCreationRequest creationRequest, User authUser){
+        if (!isLeagueValid(creationRequest)) {
+            throw new InvalidRequestException("Invalid Credentials, either empty name field or balance < 1");
+        }
+
+        if (!isLeagueNameAvailable(creationRequest.getName())) {
+            throw new DuplicateCredentialsException("League name is already taken.");
+        }
+
+        League authLeague = new League(creationRequest, authUser);
+
+        return new LeagueCreatedResponse(leagueRepo.save(authLeague));
     }
 
     //deletes a league of a given name
@@ -45,13 +58,14 @@ public class LeagueService {
 
     //validation methods:
     //makes sure league name is valid syntax
-    private boolean isLeagueValid(){
-        return false;
+    private boolean isLeagueValid(LeagueCreationRequest creationRequest){
+        if (creationRequest.getName() == null || creationRequest.getName().trim().equals("")) return false;
+        return creationRequest.getInitialBalance() >= 1;
     }
 
     //returns true if the league name does not exist in database
     public boolean isLeagueNameAvailable(String leagueName){
-        return false;
+        return !leagueRepo.findLeagueByLeagueName(leagueName).isPresent();
     }
 
 }
