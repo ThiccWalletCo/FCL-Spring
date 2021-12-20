@@ -81,5 +81,9 @@ public class LeagueController {
 
     }
 
+    @GetMapping("/name")
+    public ResponseEntity<Void> checkLeagueNameAvailability(@RequestParam String name) {
+        return leagueService.isLeagueNameAvailable(name) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.CONFLICT);
+    }
 
 }

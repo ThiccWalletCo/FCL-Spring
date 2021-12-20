@@ -63,4 +63,7 @@ public class LeagueService {
         return leagueRepo.findLeagueByLeagueName(leagueName);
     }
 
+    public boolean isLeagueNameAvailable(String name) {
+        return !leagueRepo.findLeagueByLeagueName(name).isPresent();
+    }
 }
