@@ -13,19 +13,28 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ErrorHandlingAspect {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({InvalidRequestException.class, DuplicateCredentialsException.class, MethodArgumentNotValidException.class,MethodArgumentNotValidException.class})
+    @ExceptionHandler(
+            {InvalidRequestException.class,
+             DuplicateCredentialsException.class,
+             MethodArgumentNotValidException.class,
+             InsufficientFundsException.class})
     public ErrorResponse handleBadRequests(Exception e) {
         return new ErrorResponse(400, e);
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler({NotLoggedInException.class, DuplicateLoginAttemptException.class})
+    @ExceptionHandler(
+            {NotLoggedInException.class,
+             DuplicateLoginAttemptException.class,
+             NoWalletException.class,
+             NotJoinedException.class,
+             NoLeagueException.class})
     public ErrorResponse handleUnauthorizedRequests(Exception e) {
         return new ErrorResponse(401, e);
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({NoSuchUserException.class})
+    @ExceptionHandler({NoSuchElementException.class})
     public ErrorResponse handleNotFoundRequests(Exception e) {
         return new ErrorResponse(404, e);
     }

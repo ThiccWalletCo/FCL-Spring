@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CoinRepository extends CrudRepository<Coin, String> {
-
-    @Query("SELECT coin.currPair from Coin coin")
-    List<Coin> findAllCoins();
+public interface CoinRepository extends CrudRepository<Coin, CoinId> {
+    //@Query("from Coin where wallet_id = :walletId")
+    @Query("from Coin where coinId.walletId = :walletId")
+    List<Coin> findCoinsByWalletId(String walletId);
 }
