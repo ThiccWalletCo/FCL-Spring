@@ -58,4 +58,8 @@ public class WalletService {
     public Wallet updateWallet(Wallet wallet) {
        return walletRepo.save(wallet);
     }
+
+    public List<Wallet> getWalletsInLeague(String id) {
+        return walletRepo.getWalletsByLeagueId(id);
+    }
 }

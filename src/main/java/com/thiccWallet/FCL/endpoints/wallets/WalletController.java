@@ -1,6 +1,7 @@
 package com.thiccWallet.FCL.endpoints.wallets;
 
 import com.thiccWallet.FCL.common.exception.*;
+import com.thiccWallet.FCL.data.coin.Coin;
 import com.thiccWallet.FCL.data.coin.CoinService;
 import com.thiccWallet.FCL.data.coin.dtos.responses.CoinResponse;
 import com.thiccWallet.FCL.endpoints.leagues.League;
@@ -9,6 +10,7 @@ import com.thiccWallet.FCL.endpoints.users.User;
 import com.thiccWallet.FCL.endpoints.users.UserRepository;
 import com.thiccWallet.FCL.endpoints.users.UserService;
 import com.thiccWallet.FCL.endpoints.wallets.dtos.responses.JoinSuccessResponse;
+import com.thiccWallet.FCL.endpoints.wallets.dtos.responses.WalletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/wallet")
 public class WalletController {
@@ -35,24 +38,39 @@ public class WalletController {
         this.userService = userService;
     }
 
-    @GetMapping("/coins")
-    public List<CoinResponse> getWalletCoins(HttpServletRequest req) {
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public WalletResponse getWalletCoins(HttpServletRequest req) {
         HttpSession session = req.getSession(false);
 
         if (session == null) {
             throw new NotLoggedInException("Cannot access wallet, user not logged in!");
         }
 
+        User authUser = (User)session.getAttribute("authorizedUser");
         Wallet wallet = (Wallet)session.getAttribute("currentWallet");
 
         if (wallet == null) {
             throw new NoWalletException("Cannot Access wallet, user has not selected a league.");
         }
 
-        return coinService.getCoinsByWallet(wallet.getWalletID())
+        List<Coin> walletCoins = coinService.getCoinsByWallet(wallet.getWalletID())
+                .stream()
+                .map(Coin::new)
+                .collect(Collectors.toList());
+
+        double walletCoinUSDValue = coinService.calculateCoinValue(walletCoins);
+
+        List<CoinResponse> coinResponses = walletCoins
                 .stream()
                 .map(CoinResponse::new)
                 .collect(Collectors.toList());
+
+        return new WalletResponse(
+                authUser.getUsername(),
+                walletCoinUSDValue + wallet.getCashBalance(),
+                wallet.getCashBalance(),
+                coinResponses);
     }
 
 

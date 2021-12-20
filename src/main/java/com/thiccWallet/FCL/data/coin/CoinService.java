@@ -159,4 +159,14 @@ public class CoinService {
     }
 
 
+    public double calculateCoinValue(List<Coin> walletCoins) {
+
+        double total = 0;
+
+        for (Coin c : walletCoins) {
+            total += coinDAO.valueOf(c.getCoinId().getCurrPair()) * c.getAmount();
+        }
+
+        return total;
+    }
 }
