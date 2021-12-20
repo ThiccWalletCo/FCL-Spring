@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/coin")
 public class CoinController {

@@ -24,8 +24,7 @@ public class Coin {
     }
 
     public Coin(Coin coin) {
-        this.coinId.setWalletId(coin.coinId.getWalletId());
-        this.coinId.setCurrPair(coin.coinId.getCurrPair());
+        this.coinId = new CoinId(coin.getCoinId().getCurrPair(), coin.getCoinId().getWalletId());
         this.amount = coin.getAmount();
     }
 
