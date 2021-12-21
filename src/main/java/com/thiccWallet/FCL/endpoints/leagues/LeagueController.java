@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/league")
 public class LeagueController {
@@ -86,5 +87,9 @@ public class LeagueController {
 
     }
 
+    @GetMapping("/name")
+    public ResponseEntity<Void> checkLeagueNameAvailability(@RequestParam String name) {
+        return leagueService.isLeagueNameAvailable(name) ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.CONFLICT);
+    }
 
 }

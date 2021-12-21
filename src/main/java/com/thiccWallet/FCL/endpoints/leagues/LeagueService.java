@@ -64,11 +64,15 @@ public class LeagueService {
     }
 
     public List<LeagueResponse> getAllLeaguesByUser(String id) {
-        List<LeagueResponse> leagues = ((Collection<League>) leagueRepo.findLeaguesbyUserId(id))
+        List<LeagueResponse> leagues = ((Collection<League>) leagueRepo.findLeaguesByUserId(id))
                 .stream()
                 .map(LeagueResponse::new)
                 .collect(Collectors.toList());
 
         return leagues;
+    }
+
+    public boolean isLeagueNameAvailable(String name) {
+        return !leagueRepo.findLeagueByLeagueName(name).isPresent();
     }
 }
