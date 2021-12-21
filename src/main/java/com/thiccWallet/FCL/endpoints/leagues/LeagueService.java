@@ -63,4 +63,12 @@ public class LeagueService {
         return leagueRepo.findLeagueByLeagueName(leagueName);
     }
 
+    public List<LeagueResponse> getAllLeaguesByUser(String id) {
+        List<LeagueResponse> leagues = ((Collection<League>) leagueRepo.findLeaguesbyUserId(id))
+                .stream()
+                .map(LeagueResponse::new)
+                .collect(Collectors.toList());
+
+        return leagues;
+    }
 }
