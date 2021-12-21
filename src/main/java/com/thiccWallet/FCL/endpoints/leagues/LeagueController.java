@@ -34,6 +34,11 @@ public class LeagueController {
         return leagueService.getAllLeagues();
     }
 
+    @GetMapping(value="/user={userId}", produces = "application/json")
+    public List<LeagueResponse> getLeaguesByUser(@PathVariable String userId) {
+        return leagueService.getAllLeaguesByUser(userId);
+    }
+
     // Create a league
     @PostMapping(consumes = "application/json", produces = "application/json")
     public LeagueCreatedResponse createLeague(@RequestBody LeagueCreationRequest creationRequest, HttpServletRequest req) {
