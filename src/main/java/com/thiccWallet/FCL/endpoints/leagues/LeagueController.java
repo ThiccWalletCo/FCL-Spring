@@ -51,9 +51,13 @@ public class LeagueController {
             throw new NotLoggedInException("Can't create League, user is not logged in.");
         }
 
-        TokenDetails authDetails = tokenService.extractAdvancedTokenDetails(token);
-
-        User authUser = userService.getUserById(authDetails.getUser().getId()).get();
+        PrincipalResponse authDetails;
+        try {
+            authDetails = tokenService.extractAdvancedTokenDetails(token).getUser();
+        } catch (Exception e) {
+            authDetails = tokenService.extractTokenDetails(token);
+        }
+        User authUser = userService.getUserById(authDetails.getId()).get();
 
 
         return leagueService.createLeague(creationRequest, authUser);
