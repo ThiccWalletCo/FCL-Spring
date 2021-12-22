@@ -54,7 +54,8 @@ public class LoginController {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", token);
             headers.set("Content-Type", "application/json");
-            
+            headers.set("Access-Control-Expose-Headers", "Authorization");
+
             return ResponseEntity.ok()
                     .headers(headers)
                     .body(payload);
