@@ -9,6 +9,7 @@ import com.thiccWallet.FCL.endpoints.leagues.LeagueService;
 import com.thiccWallet.FCL.endpoints.users.User;
 import com.thiccWallet.FCL.endpoints.users.UserRepository;
 import com.thiccWallet.FCL.endpoints.users.UserService;
+import com.thiccWallet.FCL.endpoints.wallets.dtos.request.IndiWalletRequest;
 import com.thiccWallet.FCL.endpoints.wallets.dtos.responses.JoinSuccessResponse;
 import com.thiccWallet.FCL.endpoints.wallets.dtos.responses.WalletResponse;
 import org.springframework.http.HttpStatus;
@@ -130,6 +131,33 @@ public class WalletController {
 
         session.setAttribute("currentWallet", wallet);
     }
+
+    @GetMapping("/get")
+    public WalletResponse getIndiWallet (@RequestBody IndiWalletRequest req){
+        Wallet wallet = walletService.getIndiWallet(req);
+
+        List<Coin> walletCoins = coinService.getCoinsByWallet(wallet.getWalletID())
+                .stream()
+                .map(Coin::new)
+                .collect(Collectors.toList());
+
+        double walletCoinUSDValue = coinService.calculateCoinValue(walletCoins);
+
+        List<CoinResponse> coinResponses = walletCoins
+                .stream()
+                .map(CoinResponse::new)
+                .collect(Collectors.toList());
+
+        return new WalletResponse(
+                req.getUsername(),
+                walletCoinUSDValue + wallet.getCashBalance(),
+                wallet.getCashBalance(),
+                coinResponses);
+    }
+
+//        List<Coin> coins = coinService.getCoinsByWallet(wallet.getWalletID());
+//        return new WalletResponse(wallet.getOwner().getUsername(), walletService.get, wallet.getCashBalance(), )
+       // return new WalletResponse(walletService.getIndiWallet(req))
 
 
 }
