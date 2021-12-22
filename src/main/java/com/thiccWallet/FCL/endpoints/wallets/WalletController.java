@@ -140,6 +140,7 @@ public class WalletController {
         String advancedToken = tokenService.generateAdvancedToken(authUser, league.getId(), wallet.getWalletID());
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", advancedToken);
+        headers.set("Access-Control-Expose-Headers", "Authorization");
 
         return ResponseEntity.ok()
                 .headers(headers).body(null);
