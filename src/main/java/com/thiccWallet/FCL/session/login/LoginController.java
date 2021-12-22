@@ -3,6 +3,7 @@ package com.thiccWallet.FCL.session.login;
 import com.thiccWallet.FCL.common.exception.DuplicateLoginAttemptException;
 import com.thiccWallet.FCL.common.exception.NoSuchElementException;
 import com.thiccWallet.FCL.common.exception.NotLoggedInException;
+import com.thiccWallet.FCL.common.util.tokens.TokenService;
 import com.thiccWallet.FCL.session.login.dtos.request.LoginRequest;
 import com.thiccWallet.FCL.endpoints.users.User;
 import com.thiccWallet.FCL.endpoints.users.UserService;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
@@ -21,14 +23,16 @@ import java.util.Optional;
 public class LoginController {
 
     private UserService userService;
+    private TokenService tokenService;
 
-    public LoginController(UserService userService) {
+    public LoginController(UserService userService, TokenService tokenService) {
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
     //@ResponseStatus(HttpStatus.OK)//returns a principal object for front end
     @PostMapping(consumes = "application/json")
-    public PrincipalResponse loginUser(@RequestBody @Valid LoginRequest loginRequest, HttpServletRequest req) {
+    public PrincipalResponse loginUser(@RequestBody @Valid LoginRequest loginRequest, HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession(false);//false means it does not return new session if one doesn't exist
 
         if (session != null) {
@@ -43,7 +47,12 @@ public class LoginController {
             session = req.getSession();
 
             session.setAttribute("authorizedUser", authorizedUser);
-            return new PrincipalResponse(authorizedUser);
+            PrincipalResponse payload = new PrincipalResponse(authorizedUser);
+
+            // Create and return session token
+            String token = tokenService.generateToken(payload);
+            resp.setHeader("Authorization", token);
+            return payload;
 
         } else {
             throw new NoSuchElementException("Could not locate user given provided credentials");

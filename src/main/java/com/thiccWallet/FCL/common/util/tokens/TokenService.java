@@ -2,7 +2,8 @@ package com.thiccWallet.FCL.common.util.tokens;
 
 
 import com.thiccWallet.FCL.common.exception.InvalidRequestException;
-import com.thiccWallet.FCL.endpoints.users.User;
+import com.thiccWallet.FCL.common.exception.InvalidTokenException;
+import com.thiccWallet.FCL.session.login.dtos.responses.PrincipalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class TokenService {
         this.tokenValidator = tokenValidator;
     }
 
-    public String generateToken(User subject) {
+    public String generateToken(PrincipalResponse subject) {
         return tokenGenerator.createToken(subject);
     }
 
@@ -34,7 +35,7 @@ public class TokenService {
                 .isPresent();
     }
 
-    public Principal extractTokenDetails(String tokenHeader) {
+    public PrincipalResponse extractTokenDetails(String tokenHeader) {
 
         if (tokenHeader == null || tokenHeader.trim().equals("")) {
             throw new InvalidRequestException("No authentication token found on request!");
@@ -44,7 +45,6 @@ public class TokenService {
 
         return tokenValidator.parseToken(token)
                 .orElseThrow(InvalidTokenException::new);
-
     }
 
 }

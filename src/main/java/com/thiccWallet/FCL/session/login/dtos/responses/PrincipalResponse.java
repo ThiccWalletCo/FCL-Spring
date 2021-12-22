@@ -11,6 +11,11 @@ public class PrincipalResponse {
         super();
     }
 
+    public PrincipalResponse(String id, String username) {
+        this.id = id;
+        this.username = username;
+    }
+
     public PrincipalResponse(User user){
         this.id = user.getId();
         this.username = user.getUsername();
