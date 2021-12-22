@@ -134,4 +134,8 @@ public class UserService {
     public List<User> getUsersInLeague(String leagueId) {
         return userRepo.findUsersByLeagueId(leagueId);
     }
+
+    public Optional<User> getUserById(String id) {
+        return userRepo.findById(id);
+    }
 }

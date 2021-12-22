@@ -1,11 +1,14 @@
 package com.thiccWallet.FCL.endpoints.leagues;
 
 import com.thiccWallet.FCL.common.exception.*;
+import com.thiccWallet.FCL.common.util.tokens.TokenDetails;
+import com.thiccWallet.FCL.common.util.tokens.TokenService;
 import com.thiccWallet.FCL.endpoints.leagues.dtos.requests.LeagueCreationRequest;
 import com.thiccWallet.FCL.endpoints.leagues.dtos.responses.LeagueCreatedResponse;
 import com.thiccWallet.FCL.endpoints.leagues.dtos.responses.LeagueResponse;
 import com.thiccWallet.FCL.endpoints.users.User;
 import com.thiccWallet.FCL.endpoints.users.UserService;
+import com.thiccWallet.FCL.session.login.dtos.responses.PrincipalResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +25,12 @@ public class LeagueController {
 
     private LeagueService leagueService;
     private UserService userService;
+    private TokenService tokenService;
 
-    public LeagueController(LeagueService leagueService, UserService userService) {
+    public LeagueController(LeagueService leagueService, UserService userService, TokenService tokenService) {
         this.leagueService = leagueService;
         this.userService = userService;
+        this.tokenService = tokenService;
     }
 
     //Get all leagues
@@ -41,14 +46,15 @@ public class LeagueController {
 
     // Create a league
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public LeagueCreatedResponse createLeague(@RequestBody LeagueCreationRequest creationRequest, HttpServletRequest req) {
-        HttpSession session = req.getSession(false);
-
-        if (session == null) {
+    public LeagueCreatedResponse createLeague(@RequestBody LeagueCreationRequest creationRequest, HttpServletRequest req, @RequestHeader("Authorization") String token) {
+        if (token == null || token.equals("")) {
             throw new NotLoggedInException("Can't create League, user is not logged in.");
         }
 
-        User authUser = (User)session.getAttribute("authorizedUser");
+        TokenDetails authDetails = tokenService.extractAdvancedTokenDetails(token);
+
+        User authUser = userService.getUserById(authDetails.getUser().getId()).get();
+
 
         return leagueService.createLeague(creationRequest, authUser);
     }
