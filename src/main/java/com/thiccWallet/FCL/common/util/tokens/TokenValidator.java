@@ -21,8 +21,6 @@ public class TokenValidator {
 
     public Optional<PrincipalResponse> parseToken(String token) {
 
-        System.out.println(">>>>>>>>>>>>>>>SHOULD BE STRIPPED>>>>>>>>>>>>>>>>>>>>" + token);
-
         try {
 
             Claims claims = Jwts.parser()
@@ -31,6 +29,24 @@ public class TokenValidator {
                     .getBody();
 
             return Optional.of(new PrincipalResponse(claims.getId(), claims.getSubject()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage()); // TODO replace with something better
+        }
+
+    }
+
+    public Optional<TokenDetails> parseAdvancedToken(String token) {
+
+        try {
+
+            Claims claims = Jwts.parser()
+                    .setSigningKey(jwtConfig.getSigningKey())
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return Optional.of(new TokenDetails(new PrincipalResponse(claims.getId(), claims.getSubject()), claims.get("WalletId", String.class), claims.get("LeagueId", String.class)));
 
         } catch (Exception e) {
             e.printStackTrace();

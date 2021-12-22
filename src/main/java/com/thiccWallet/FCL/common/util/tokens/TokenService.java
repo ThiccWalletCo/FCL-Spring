@@ -23,6 +23,10 @@ public class TokenService {
         return tokenGenerator.createToken(subject);
     }
 
+    public String generateAdvancedToken(PrincipalResponse subject, String leagueId, String walletId) {
+        return tokenGenerator.createAdvancedToken(subject, leagueId, walletId);
+    }
+
     public boolean isTokenValid(String token) {
 
         if (token == null || token.trim().equals("")) {
@@ -45,6 +49,15 @@ public class TokenService {
 
         return tokenValidator.parseToken(token)
                 .orElseThrow(InvalidTokenException::new);
+    }
+
+    public TokenDetails extractAdvancedTokenDetails(String tokenHeader) {
+        if (tokenHeader == null || tokenHeader.trim().equals("")) {
+            throw new InvalidRequestException("No authentication token found on request!");
+        }
+
+        String token = tokenHeader.replaceAll("Bearer ", "");
+        return tokenValidator.parseAdvancedToken(token).orElseThrow(InvalidTokenException::new);
     }
 
 }
