@@ -146,7 +146,7 @@ public class WalletController {
                 .headers(headers).body(null);
     }
 
-    @GetMapping("/get")
+    @PostMapping("/get")
     public WalletResponse getIndiWallet (@RequestBody IndiWalletRequest req){
         Wallet wallet = walletService.getIndiWallet(req);
 
