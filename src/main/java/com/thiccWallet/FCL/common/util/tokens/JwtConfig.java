@@ -12,7 +12,7 @@ import java.security.Key;
 @Component
 public class JwtConfig {
 
-    @Value("${jwt.secret}")
+    @Value("IAMAseCretStringForCreatinGJWTs")
     private String salt;
 
     @Value("#{24 * 60 * 60 * 1000}") // number of milliseconds in a day
