@@ -83,24 +83,23 @@ public class WalletController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = "application/json", value = "/{leagueName}")
-    public JoinSuccessResponse joinLeague(@PathVariable String leagueName, HttpServletRequest req) {
-        HttpSession session = req.getSession(false);
-
-        if (session == null) throw new NotLoggedInException("Cannot join League, user not logged in.");
+    public JoinSuccessResponse joinLeague(@PathVariable String leagueName, @RequestHeader("Authorization") String token) {
+        if (token == null || token.equals("")) throw new NotLoggedInException("Cannot join League, user not logged in.");
 
         if (leagueName.equals("")) throw new InvalidRequestException("League Name cannot be empty string");
 
         Optional<League> leagueOptional = leagueService.findLeagueByLeagueName(leagueName);
         if (!leagueOptional.isPresent()) throw new NoSuchElementException("Could not locate a league given: " + leagueName);
 
-        User authUser = (User)session.getAttribute("authorizedUser");
+        PrincipalResponse authUser = tokenService.extractTokenDetails(token);
+
         League currLeague = leagueService.findLeagueByLeagueName(leagueName).get();
         String leagueId = currLeague.getId();
         if(userService.isUserInLeague(leagueId, authUser.getId())){
             throw new InvalidRequestException("user already exists in league");
         }
 
-        return walletService.createWallet(leagueOptional.get(), authUser);
+        return walletService.createWallet(leagueOptional.get(), userService.getUserById(authUser.getId()).get());
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
