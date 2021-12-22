@@ -3,10 +3,12 @@ package com.thiccWallet.FCL.endpoints.wallets;
 import com.thiccWallet.FCL.data.coin.Coin;
 import com.thiccWallet.FCL.endpoints.leagues.League;
 import com.thiccWallet.FCL.endpoints.users.User;
+import com.thiccWallet.FCL.endpoints.wallets.dtos.request.IndiWalletRequest;
 import com.thiccWallet.FCL.endpoints.wallets.dtos.responses.JoinSuccessResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -61,5 +63,13 @@ public class WalletService {
 
     public List<Wallet> getWalletsInLeague(String id) {
         return walletRepo.getWalletsByLeagueId(id);
+    }
+
+    public Wallet getIndiWallet(IndiWalletRequest req) {
+        return walletRepo.getWalletByUsernameAndLeagueName(req.getUsername(), req.getLeagueName());
+    }
+
+    public Optional<Wallet> getWalletById(String walletId) {
+        return walletRepo.findById(walletId);
     }
 }

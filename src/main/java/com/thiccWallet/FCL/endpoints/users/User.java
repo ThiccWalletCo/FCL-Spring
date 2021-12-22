@@ -40,6 +40,11 @@ public class User {
         this.dateCreated = dateCreated;
     }
 
+    public User(String id, String username) {
+        this.id = id;
+        this.username = username;
+    }
+
     public User(UserCreationRequest newUser) {
         this.email = newUser.getEmail();
         this.username = newUser.getUsername();
