@@ -14,6 +14,7 @@ import com.thiccWallet.FCL.endpoints.wallets.dtos.request.IndiWalletRequest;
 import com.thiccWallet.FCL.endpoints.wallets.dtos.responses.JoinSuccessResponse;
 import com.thiccWallet.FCL.endpoints.wallets.dtos.responses.WalletResponse;
 import com.thiccWallet.FCL.session.login.dtos.responses.PrincipalResponse;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -121,27 +122,28 @@ public class WalletController {
 
     // This endpoint should be hit after /league/select
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PostMapping("/select")
-    public void selectWallet(HttpServletRequest req, HttpServletResponse resp, @RequestHeader("Authorization") String token) {
-        PrincipalResponse authUser = tokenService.extractTokenDetails(token);
-        HttpSession session = req.getSession(false);
+    @PostMapping("/select/{leagueName}")
+    public ResponseEntity <Void> selectWallet(@PathVariable String leagueName, @RequestHeader("Authorization") String token) {
+        if (token == null || token.equals("")) throw new NoLeagueException("Cannot select Wallet, user not logged in.");
 
-        if (session == null) throw new NoLeagueException("Cannot select Wallet, user not logged in.");
+        PrincipalResponse authUser = tokenService.extractTokenDetails(token);
+        //HttpSession session = req.getSession(false);
+
 
         // User authUser = (User)session.getAttribute("authorizedUser");
-        League league = (League)session.getAttribute("currentLeague");
+        League league = leagueService.findLeagueByLeagueName(leagueName).get();
 
         if (league == null) throw new InvalidRequestException("User does not have a league assigned to their session.");
 
         Wallet wallet = walletService.selectWalletByIds(league.getId(), authUser.getId());
 
-        session.setAttribute("currentWallet", wallet);
-
-
         // PrincipalResponse principalResponse = new PrincipalResponse(authUser);
         String advancedToken = tokenService.generateAdvancedToken(authUser, league.getId(), wallet.getWalletID());
-        resp.setHeader("Authorization", token);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", advancedToken);
 
+        return ResponseEntity.ok()
+                .headers(headers).body(null);
     }
 
     @GetMapping("/get")
