@@ -13,17 +13,11 @@ import com.thiccWallet.FCL.endpoints.users.UserService;
 import com.thiccWallet.FCL.endpoints.wallets.Wallet;
 import com.thiccWallet.FCL.endpoints.wallets.WalletService;
 import net.bytebuddy.dynamic.scaffold.MethodGraph;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin
@@ -34,11 +28,13 @@ public class LeaderboardController {
     private WalletService walletService;
     private UserService userService;
     private CoinService coinService;
+    private LeagueService leagueService;
 
-    public LeaderboardController(WalletService walletService, UserService userService, CoinService coinService) {
+    public LeaderboardController(WalletService walletService, UserService userService, CoinService coinService, LeagueService leagueService) {
         this.walletService = walletService;
         this.userService = userService;
         this.coinService = coinService;
+        this.leagueService = leagueService;
     }
 
     @GetMapping(produces = "application/json")
@@ -56,6 +52,37 @@ public class LeaderboardController {
         }
 
         List<Wallet> wallets = walletService.getWalletsInLeague(league.getId());
+
+        List<LeaderboardResponse> response = new LinkedList<>();
+
+        for (Wallet w : wallets) {
+            List<Coin> coins = coinService.getCoinsByWallet(w.getWalletID());
+            double amount = coinService.calculateCoinValue(coins) + w.getCashBalance();
+
+            String username = w.getOwner().getUsername();
+
+            response.add(new LeaderboardResponse(username, amount));
+
+        }
+
+        response = response.stream()
+                .sorted((lr1, lr2) -> (int)Math.signum(lr2.getBalance() - lr1.getBalance()))
+                .collect(Collectors.toList());
+
+        return response;
+
+    }
+
+    @GetMapping(value="/league={leagueName}",produces = "application/json")
+    public List<LeaderboardResponse> getLeaderboardByName(@PathVariable String leagueName) {
+
+        Optional<League> league = leagueService.findLeagueByLeagueName(leagueName);
+
+        if (league == null) {
+            throw new NoLeagueException("League does not exist!");
+        }
+
+        List<Wallet> wallets = walletService.getWalletsInLeague(league.get().getId());
 
         List<LeaderboardResponse> response = new LinkedList<>();
 
