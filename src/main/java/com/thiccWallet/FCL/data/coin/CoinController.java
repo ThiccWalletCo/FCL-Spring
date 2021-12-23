@@ -84,6 +84,11 @@ public class CoinController {
 
     }
 
+    @GetMapping("/supported")
+    public List<String> getValidPairs() {
+        return coinService.getValidPairs();
+    }
+
 
 
 }
