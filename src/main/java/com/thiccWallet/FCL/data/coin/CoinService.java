@@ -169,4 +169,8 @@ public class CoinService {
 
         return total;
     }
+
+    public List<String> getValidPairs() {
+        return coinPairs;
+    }
 }
