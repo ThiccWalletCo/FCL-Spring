@@ -29,4 +29,10 @@ You must also update the file called "application.yml" located in "/src/main/res
 
 ## Exposed Endpoints
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/API_EndPoints_Crypto_Project_P2 (1).png?raw=true)
+![API Endpoint Diagram](https://github.com/ThiccWalletCo/FCL-Spring/blob/andrewaslakson1-readme/src/main/resources/API_EndPoints_Crypto_Project_P2%20(1).png?raw=true)
+
+---------------------------------------------
+
+## Entity Relationship Diagram
+
+![Entity Relationship Diagram](https://github.com/ThiccWalletCo/FCL-Spring/blob/andrewaslakson1-readme/src/main/resources/Simplified_FCL_ERD.png?raw=true)
